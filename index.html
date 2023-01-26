@@ -6,22 +6,44 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Coffees on Hand</h1>
+    <header>
+        <div id="company-name">NIMBUS</div>
+        <div id="company-tagline">COFFEE ROASTING CO</div>
+    </header>
 
-    <form>
-        <label for="roast-selection"></label>
-        <select id="roast-selection">
-            <option>Light</option>
-            <option>Medium Light</option>
-            <option>Medium</option>
-            <option>Medium Dark</option>
-            <option>Dark</option>
-        </select>
-        <input id="submit" type="submit" />
-    </form>
+    <section id="display-port-coffees">
+        <h1>Coffees on Hand</h1>
 
     <div id="coffees"></div>
-
+    </section>
+    <section id="search-and-add-coffees">
+        <form>
+            <label for="roast-selection"></label>
+            <select id="roast-selection">
+                <option>Light</option>
+                <option>Medium Light</option>
+                <option>Medium</option>
+                <option>Medium Dark</option>
+                <option>Dark</option>
+            </select>
+            <label for="country-selection"></label>
+            <select id="country-selection">
+                <option>Brazil</option>
+                <option>Colombia</option>
+                <option>Guatemala</option>
+                <option>Nicaragua</option>
+                <option>Sumatra</option>
+            </select>
+            <select id="flavor-selection">
+                <option>Banana</option>
+                <option>Pineapple</option>
+                <option>Chocolate</option>
+                <option>Mango</option>
+                <option>Orange</option>
+            </select>
+            <input id="submit" type="submit" />
+        </form>
+    </section>
     <script src="main.js"></script>
 </body>
 </html>

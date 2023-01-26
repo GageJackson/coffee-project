@@ -1,51 +1,76 @@
 * {
     padding: 0;
     margin: 0;
+    font: inherit;
 }
 ul {
     list-style-type: none;
 }
 h1 {
     color: white;
-    font-family: "Avenir Next", sans-serif;
     font-weight: bold;
-    font-size: 2.5rem;
+    font-size: 2rem;
+    margin-left: 3rem;
 }
 body {
     background: #202430;
+    font-family: "Avenir Next",sans-serif;
 }
 div.coffee{
     height: 20rem;
-    width: 225px;
+    width: 15rem;
     color: white;
     background-image: linear-gradient(to bottom right, #ff7d57, #F44B6C);
-    border-radius: 15px;
-    margin:30px;
+    border-radius: 1rem;
+    margin:3rem;
     text-align: center;
-    font-family: "Avenir Next", sans-serif;
     font-size: 1rem;
     font-weight: bold;
-    align-content: center;
+    box-shadow: 0 1rem 2rem #010118;
 }
 div.coffee-info {
     height: 13rem;
-    width: 185px;
+    width: 13rem;
     color: white;
     background: #242A38;
     text-align: left;
-    border-radius: 15px;
-    padding:10px 20px;
+    border-radius: 1rem;
+    padding:1rem 1rem;
 }
 li.coffee-label {
     color: #4E596F;
     font-size: 0.75rem;
     font-weight: normal;
-    padding-top: 10px;
+    padding-top: 1rem;
 }
 li.coffee-name {
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 li.coffee-id {
     font-size: 0.75rem;
     font-weight: normal;
+}
+header {
+    background: #F44B6C;
+    margin-bottom: 1.5rem;
+}
+#company-name {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: white;
+    margin-left: 3rem;
+    line-height: 1;
+}
+#company-tagline {
+    font-size: 0.94rem;
+    font-weight: lighter;
+    color: #4E596F;
+    margin-left: 3rem;
+}
+#display-port-coffees {
+    width: 75%
+}
+#search-and-add-coffees {
+    width: 25%;
+    background-color: #ff7d57;
 }
