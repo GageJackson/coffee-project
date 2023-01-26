@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Nimbus Coffee Roasting Co.</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,23 +11,16 @@
     <form>
         <label for="roast-selection"></label>
         <select id="roast-selection">
-            <option>light</option>
-            <option>medium</option>
-            <option>dark</option>
+            <option>Light</option>
+            <option>Medium Light</option>
+            <option>Medium</option>
+            <option>Medium Dark</option>
+            <option>Dark</option>
         </select>
         <input id="submit" type="submit" />
     </form>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>ROAST</th>
-            </tr>
-        </thead>
-        <tbody id="coffees"></tbody>
-    </table>
+    <div id="coffees"></div>
 
     <script src="main.js"></script>
 </body>
