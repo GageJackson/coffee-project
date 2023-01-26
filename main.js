@@ -3,9 +3,9 @@
 function renderCoffee(coffee) {
     var html = '<div class="coffee">'
     html += '<ul>'
-    html += '<li>' + coffee.id + '</li>';
-    html += '<li>' + coffee.name + '</li>';
-    html += '<li>' + coffee.country + '</li>';
+    html += '<li class="coffee-id">' + coffee.id + '</li>';
+    html += '<li class="coffee-name">' + coffee.name + '</li>';
+    html += '<li class="coffee-id">' + coffee.country + '</li>';
     html += '</ul>'
     html += '<div class="coffee-info">'
     html += '<ul>'

@@ -1,23 +1,51 @@
+* {
+    padding: 0;
+    margin: 0;
+}
 ul {
     list-style-type: none;
 }
-
+h1 {
+    color: white;
+    font-family: "Avenir Next", sans-serif;
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+body {
+    background: #202430;
+}
 div.coffee{
     height: 20rem;
     width: 225px;
-    alignment: center;
-    background: aquamarine;
+    color: white;
+    background-image: linear-gradient(to bottom right, #ff7d57, #F44B6C);
     border-radius: 15px;
     margin:30px;
+    text-align: center;
+    font-family: "Avenir Next", sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    align-content: center;
 }
 div.coffee-info {
     height: 13rem;
     width: 185px;
     color: white;
-    background: darkcyan;
+    background: #242A38;
+    text-align: left;
     border-radius: 15px;
-    padding: 20px
+    padding:10px 20px;
 }
 li.coffee-label {
-    color: blueviolet;
+    color: #4E596F;
+    font-size: 0.75rem;
+    font-weight: normal;
+    padding-top: 10px;
+}
+li.coffee-name {
+    font-size: 1rem;
+}
+li.coffee-id {
+    font-size: 0.75rem;
+    font-weight: normal;
 }
