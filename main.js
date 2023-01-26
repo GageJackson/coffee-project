@@ -1,6 +1,4 @@
-"use strict"
-
-function renderCoffee(coffee) {
+function renderCoffeeTile(coffee) {
     var html = '<div class="coffee">'
     html += '<ul>'
     html += '<li class="coffee-id">' + coffee.id + '</li>';
@@ -20,35 +18,39 @@ function renderCoffee(coffee) {
     html += '</ul>'
     html += '</div>'
     html += '</div>';
-
     return html;
 }
-
 function renderCoffees(coffees) {
     var html = '';
     for(var i = coffees.length - 1; i >= 0; i--) {
-        html += renderCoffee(coffees[i]);
+        html += renderCoffeeTile(coffees[i]);
     }
     return html;
 }
-
-function updateCoffees(e) {
-    e.preventDefault(); // don't submit the form, we just want to update the data
+var filteredCoffees = [];
+function sortCoffees(){
     let selectedRoast = roastSelection.value;
     let selectedCountry = countrySelection.value;
     let selectedFlavor = flavorSelection.value;
-
-    let filteredCoffees = [];
-    coffees.forEach(function(coffee) {
-        if (coffee.roast === selectedRoast && coffee.country === selectedCountry) {
+    //let filteredCoffees = [];
+    coffeeOfferings.forEach(function(coffee) {
+        if ((coffee.roast === selectedRoast || selectedRoast === "--Select--") && (coffee.country === selectedCountry || selectedCountry === "--Select--")) {
             console.log(coffee);
             filteredCoffees.push(coffee);
         }
     });
-    tbody.innerHTML = renderCoffees(filteredCoffees);
+    coffeeTiles.innerHTML = renderCoffees(filteredCoffees);
 }
 
-var coffees = [
+function resetCoffees(){
+    filteredCoffees = [];
+    document.getElementById("roast-selection").selectedIndex = 0;
+    document.getElementById("country-selection").selectedIndex = 0;
+    document.getElementById("flavor-selection").selectedIndex = 0;
+    sortCoffees();
+}
+
+var coffeeOfferings = [
     {id: "0001", name: "Finca La Fazenda Farms", country: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roast: "Medium", flavorNotes: ["Fig", "Fruit Cake", "Mint", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL"},
     {id: "0002", name: "Sitio Baixado", country: "Brazil", region: "Cristina" , producer: "Helisson Afonso Da Silva", roast: "Medium Dark", flavorNotes: ["Caramel","Chocolate","Mango", "Pineapple"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1300 MASL"},
     {id: "0003", name: "El Alirio", country: "Colombia", region: "Huila" , producer: "John Fredy Chaguala", roast: "Medium Light", flavorNotes: ["Banana", "Grapefruit", "Orange", "Tropical Fruit"], process: "Honey", variety: "Pink Bourbon", elevation:"1620 MASL"},
@@ -65,15 +67,16 @@ var coffees = [
     {id: "0014", name: "Gayo Highlands", country: "Sumatra", region: "Central Aceh Regency" , producer: "Various Smallholders", roast: "Medium Dark", flavorNotes: ["Clove", "Mango", "Papaya", "White Pepper"], process: "Wet-Hulled", variety: "Ateng P88, Tim-Tim", elevation:"1450 MASL"},
 ];
 
-var tbody = document.querySelector('#coffees');
-var submitButton = document.querySelector('#button-submit');
-var resetButton = document.querySelector('#button-reset');
+var coffeeTiles = document.querySelector('#coffee-tiles');
+
+const submitButton = document.querySelector('#button-submit');
+const resetButton = document.querySelector('#button-reset');
+
 var roastSelection = document.querySelector('#roast-selection');
 var countrySelection = document.querySelector('#country-selection');
 var flavorSelection = document.querySelector('#flavor-selection');
 
-tbody.innerHTML = renderCoffees(coffees);
+coffeeTiles.innerHTML = renderCoffees(coffeeOfferings);
 
-var reset = false;
-submitButton.addEventListener('click', updateCoffees, reset = false);
-resetButton.addEventListener('click', updateCoffees, reset = true);
+submitButton.addEventListener('click', sortCoffees);
+resetButton.addEventListener('click', resetCoffees);
