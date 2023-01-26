@@ -7,6 +7,7 @@ function renderCoffee(coffee) {
     html += '<li class="coffee-name">' + coffee.name + '</li>';
     html += '<li class="coffee-id">' + coffee.country + '</li>';
     html += '</ul>'
+
     html += '<div class="coffee-info">'
     html += '<ul>'
     html += '<li class="coffee-label"> ROAST PROFILE </li>';
@@ -43,7 +44,6 @@ function updateCoffees(e) {
     tbody.innerHTML = renderCoffees(filteredCoffees);
 }
 
-// from http://www.ncausa.org/About-Coffee/Coffee-Roasts-Guide
 var coffees = [
     {id: "0001", name: "Finca La Fazenda Farms", country: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roast: "Medium", flavorNotes: ["Fig", "Fruit Cake", "Mint", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL"},
     {id: "0002", name: "Sitio Baixado", country: "Brazil", region: "Cristina" , producer: "Helisson Afonso Da Silva", roast: "Medium Dark", flavorNotes: ["Caramel","Chocolate","Mango", "Pineapple"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1300 MASL"},

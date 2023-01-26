@@ -6,10 +6,31 @@
     --color-accent: linear-gradient(to bottom right, #ff7d57, #F44B6C);
     --color-white: #fff;
 
-    /* established font family and font weights */
+    /* established font family, font weights, and font sizes */
     --ff-primary: 'Montserrat', sans-serif;
     --ff-heading: var(--ff-primary);
     --ff-body: var(--ff-primary);
+
+    --fw-light: 300;
+    --fw-medium: 500;
+    --fw-bold: 700;
+    --fw-logo: 900;
+
+    --fs-300: .75rem;
+    --fs-400: 1rem;
+    --fs-500: 1.5rem;
+    --fs-600: 2rem;
+    --fs-700: 3rem;
+
+    --fs-logo : var(--fs-700);
+    --fs-tagline: var(--fs-400);
+    --fs-coffe-name: var(--fs-500);
+    --fs-coffee-attributes: var(--fs-300);
+    --fs-coffee-properties: var(--fs-400);
+    --fs-header: var(--fs-600);
+    --fs-button: var(--fs-300);
+    --fs-search-text: var(--fs-300);
+
 }
 
 * {
@@ -23,8 +44,8 @@ ul {
 }
 h1 {
     color: var(--color-white);
-    font-weight: bold;
-    font-size: 2rem;
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-header);
     margin-left: 3rem;
 }
 body {
@@ -37,10 +58,8 @@ div.coffee{
     color: var(--color-white);
     background-image: var(--color-accent);
     border-radius: 1rem;
-    margin:3rem;
+    margin: 1.5rem 3rem 3rem 3rem;
     text-align: center;
-    font-size: 1rem;
-    font-weight: bold;
     box-shadow: 0 1rem 2rem #010118;
 }
 div.coffee-info {
@@ -54,32 +73,37 @@ div.coffee-info {
 }
 li.coffee-label {
     color: var(--color-primary-light);
-    font-size: 0.75rem;
-    font-weight: normal;
+    font-size: var(--fs-coffee-attributes);
+    font-weight: var(--fw-medium);
     padding-top: 1rem;
 }
 li.coffee-name {
-    font-size: 1.5rem;
+    font-size: var(--fs-coffe-name);
     line-height: 1;
 }
 li.coffee-id {
-    font-size: 0.75rem;
-    font-weight: normal;
+    font-size: var(--fs-coffee-attributes);
+    font-weight: var(--fw-medium);
+}
+li{
+    font-size: var(--fs-coffee-properties);
+    font-weight: var(--fw-bold);
 }
 header {
     background: #F44B6C;
     margin-bottom: 1.5rem;
 }
 #company-name {
-    font-size: 2.5rem;
-    font-weight: bolder;
+    font-size: var(--fs-logo);
+    font-weight: var(--fw-logo);
+    font-style: italic;
     color: var(--color-white);
     margin-left: 3rem;
     line-height: 1;
 }
 #company-tagline {
-    font-size: 0.94rem;
-    font-weight: lighter;
+    font-size: var(--fs-tagline);
+    font-weight: var(--fw-medium);
     color: var(--color-primary-light);
     margin-left: 3rem;
 }
@@ -88,5 +112,5 @@ header {
 }
 #search-and-add-coffees {
     width: 25%;
-    background-color: var(--color-accent);
+    background-image: var(--color-accent);
 }
