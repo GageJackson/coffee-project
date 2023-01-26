@@ -1,11 +1,24 @@
 "use strict"
 
 function renderCoffee(coffee) {
-    var html = '<ul class="coffee">';
-    //html += '<li>' + coffee.id + '</li>';
+    var html = '<div class="coffee">'
+    html += '<ul>'
+    html += '<li>' + coffee.id + '</li>';
     html += '<li>' + coffee.name + '</li>';
+    html += '<li>' + coffee.country + '</li>';
+    html += '</ul>'
+    html += '<div class="coffee-info">'
+    html += '<ul>'
+    html += '<li class="coffee-label"> ROAST PROFILE </li>';
     html += '<li>' + coffee.roast + '</li>';
-    html += '</ul>';
+    html += '<li class="coffee-label"> FLAVOR NOTES </li>';
+    html += '<li>' + coffee.flavorNotes[0] + '</li>';
+    html += '<li>' + coffee.flavorNotes[1] + '</li>';
+    html += '<li>' + coffee.flavorNotes[2] + '</li>';
+    html += '<li>' + coffee.flavorNotes[3] + '</li>';
+    html += '</ul>'
+    html += '</div>'
+    html += '</div>';
 
     return html;
 }
@@ -32,7 +45,7 @@ function updateCoffees(e) {
 
 // from http://www.ncausa.org/About-Coffee/Coffee-Roasts-Guide
 var coffees = [
-    {id: "0001", name: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roast: "Medium", flavorNotes: ["Fig", "Fruit Cake", "Mint", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL"},
+    {id: "0001", name: "Finca La Fazenda Farms", country: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roast: "Medium", flavorNotes: ["Fig", "Fruit Cake", "Mint", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL"},
     {id: "0002", name: "Sitio Baixado", country: "Brazil", region: "Cristina" , producer: "Helisson Afonso Da Silva", roast: "Medium Dark", flavorNotes: ["Caramel","Chocolate","Mango", "Pineapple"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1300 MASL"},
     {id: "0003", name: "El Alirio", country: "Colombia", region: "Huila" , producer: "John Fredy Chaguala", roast: "Medium Light", flavorNotes: ["Banana", "Grapefruit", "Mandarin Orange", "Tropical Fruit"], process: "Honey", variety: "Pink Bourbon", elevation:"1620 MASL"},
     {id: "0004", name: "Santa Isabel", country: "Colombia", region: "Antioquia" , producer: "Don Fernando Echavarria", roast: "Light", flavorNotes: ["Banana", "Concord Grape", "Sweet", "White Wine"], process: "Pulped Natural", variety: "Castillo", elevation:"1850 MASL"},

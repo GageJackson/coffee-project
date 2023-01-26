@@ -1,12 +1,23 @@
-table {
-    border-collapse: collapse;
-    margin: 15px 0;
-}
-
-td, th {
-    border: 1px solid black;
-    padding: 5px 10px;
-}
 ul {
     list-style-type: none;
+}
+
+div.coffee{
+    height: 20rem;
+    width: 225px;
+    alignment: center;
+    background: aquamarine;
+    border-radius: 15px;
+    margin:30px;
+}
+div.coffee-info {
+    height: 13rem;
+    width: 185px;
+    color: white;
+    background: darkcyan;
+    border-radius: 15px;
+    padding: 20px
+}
+li.coffee-label {
+    color: blueviolet;
 }
