@@ -1,26 +1,41 @@
+:root {
+    /* established color palette */
+    --color-primary: #242A38;
+    --color-primary-light: #4E596F;
+    --color-primary-dark: #1b1e2a;
+    --color-accent: linear-gradient(to bottom right, #ff7d57, #F44B6C);
+    --color-white: #fff;
+
+    /* established font family and font weights */
+    --ff-primary: 'Montserrat', sans-serif;
+    --ff-heading: var(--ff-primary);
+    --ff-body: var(--ff-primary);
+}
+
 * {
     padding: 0;
     margin: 0;
     font: inherit;
 }
+
 ul {
     list-style-type: none;
 }
 h1 {
-    color: white;
+    color: var(--color-white);
     font-weight: bold;
     font-size: 2rem;
     margin-left: 3rem;
 }
 body {
-    background: #202430;
-    font-family: "Avenir Next",sans-serif;
+    background: var(--color-primary-dark);
+    font-family: var(--ff-primary);
 }
 div.coffee{
     height: 20rem;
     width: 15rem;
-    color: white;
-    background-image: linear-gradient(to bottom right, #ff7d57, #F44B6C);
+    color: var(--color-white);
+    background-image: var(--color-accent);
     border-radius: 1rem;
     margin:3rem;
     text-align: center;
@@ -31,20 +46,21 @@ div.coffee{
 div.coffee-info {
     height: 13rem;
     width: 13rem;
-    color: white;
-    background: #242A38;
+    color: var(--color-white);
+    background: var(--color-primary);
     text-align: left;
     border-radius: 1rem;
     padding:1rem 1rem;
 }
 li.coffee-label {
-    color: #4E596F;
+    color: var(--color-primary-light);
     font-size: 0.75rem;
     font-weight: normal;
     padding-top: 1rem;
 }
 li.coffee-name {
     font-size: 1.5rem;
+    line-height: 1;
 }
 li.coffee-id {
     font-size: 0.75rem;
@@ -57,14 +73,14 @@ header {
 #company-name {
     font-size: 2.5rem;
     font-weight: bolder;
-    color: white;
+    color: var(--color-white);
     margin-left: 3rem;
     line-height: 1;
 }
 #company-tagline {
     font-size: 0.94rem;
     font-weight: lighter;
-    color: #4E596F;
+    color: var(--color-primary-light);
     margin-left: 3rem;
 }
 #display-port-coffees {
@@ -72,5 +88,5 @@ header {
 }
 #search-and-add-coffees {
     width: 25%;
-    background-color: #ff7d57;
+    background-color: var(--color-accent);
 }
