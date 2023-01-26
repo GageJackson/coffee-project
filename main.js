@@ -27,12 +27,10 @@ function renderCoffees(coffees) {
     }
     return html;
 }
-var filteredCoffees = [];
 function sortCoffees(){
     let selectedRoast = roastSelection.value;
     let selectedCountry = countrySelection.value;
     let selectedFlavor = flavorSelection.value;
-    //let filteredCoffees = [];
     coffeeOfferings.forEach(function(coffee) {
         if ((coffee.roast === selectedRoast || selectedRoast === "--Select--") && (coffee.country === selectedCountry || selectedCountry === "--Select--")) {
             console.log(coffee);
@@ -67,6 +65,7 @@ var coffeeOfferings = [
     {id: "0014", name: "Gayo Highlands", country: "Sumatra", region: "Central Aceh Regency" , producer: "Various Smallholders", roast: "Medium Dark", flavorNotes: ["Clove", "Mango", "Papaya", "White Pepper"], process: "Wet-Hulled", variety: "Ateng P88, Tim-Tim", elevation:"1450 MASL"},
 ];
 
+var filteredCoffees = [];
 var coffeeTiles = document.querySelector('#coffee-tiles');
 
 const submitButton = document.querySelector('#button-submit');

@@ -14,41 +14,47 @@
         <div id="company-tagline">COFFEE ROASTING CO</div>
     </header>
 
-    <section id="display-coffee-tiles">
-        <h1>Coffees on Hand</h1>
+    <main>
+        <div id="container">
+            <section>
+                <h1>Coffees on Hand</h1>
+                <div id="display-coffee-tiles">
+                    <div id="coffee-tiles"></div>
+                </div>
+            </section>
+            <section id="search-and-add-coffees">
+                <label for="roast-selection"></label>
+                <select id="roast-selection">
+                    <option selected>--Select--</option>
+                    <option>Light</option>
+                    <option>Medium Light</option>
+                    <option>Medium</option>
+                    <option>Medium Dark</option>
+                    <option>Dark</option>
+                </select>
+                <label for="country-selection"></label>
+                <select id="country-selection">
+                    <option selected>--Select--</option>
+                    <option>Brazil</option>
+                    <option>Colombia</option>
+                    <option>Guatemala</option>
+                    <option>Nicaragua</option>
+                    <option>Sumatra</option>
+                </select>
+                <select id="flavor-selection">
+                    <option selected>--Select--</option>
+                    <option>Banana</option>
+                    <option>Pineapple</option>
+                    <option>Chocolate</option>
+                    <option>Mango</option>
+                    <option>Orange</option>
+                </select>
+                <button id="button-submit">Submit</button>
+                <button id="button-reset">Reset</button>
+            </section>
+        </div>
+    </main>
 
-    <div id="coffee-tiles"></div>
-    </section>
-    <section id="search-and-add-coffees">
-            <label for="roast-selection"></label>
-            <select id="roast-selection">
-                <option selected>--Select--</option>
-                <option>Light</option>
-                <option>Medium Light</option>
-                <option>Medium</option>
-                <option>Medium Dark</option>
-                <option>Dark</option>
-            </select>
-            <label for="country-selection"></label>
-            <select id="country-selection">
-                <option selected>--Select--</option>
-                <option>Brazil</option>
-                <option>Colombia</option>
-                <option>Guatemala</option>
-                <option>Nicaragua</option>
-                <option>Sumatra</option>
-            </select>
-            <select id="flavor-selection">
-                <option selected>--Select--</option>
-                <option>Banana</option>
-                <option>Pineapple</option>
-                <option>Chocolate</option>
-                <option>Mango</option>
-                <option>Orange</option>
-            </select>
-            <button id="button-submit">Submit</button>
-            <button id="button-reset">Reset</button>
-    </section>
     <script src="main.js"></script>
 </body>
 </html>

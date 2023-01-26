@@ -46,7 +46,7 @@ h1 {
     color: var(--color-white);
     font-weight: var(--fw-bold);
     font-size: var(--fs-header);
-    margin-left: 3rem;
+    margin: 1.5rem 0 0 3rem;
 }
 body {
     background: var(--color-primary-dark);
@@ -91,7 +91,6 @@ li{
 }
 header {
     background: #F44B6C;
-    margin-bottom: 1.5rem;
 }
 #company-name {
     font-size: var(--fs-logo);
@@ -108,9 +107,15 @@ header {
     margin-left: 3rem;
 }
 #display-coffee-tiles {
-    width: 75%
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: min(1200px, 100% - 2rem);
+    margin-inline: auto;
 }
 #search-and-add-coffees {
-    width: 25%;
     background-image: var(--color-accent);
+}
+#container {
+    display: grid;
+    grid-template-columns: 75% 25%;
 }
