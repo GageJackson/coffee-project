@@ -3,7 +3,7 @@
 //RETURNS: html- Html text for each coffee in filteredCoffees[]
 function renderCoffeeTile(coffee, number) {
     //var html = '<article class="coffee coffee' + number + '">'
-    var html = '<article class="coffee">'
+    let html = '<article class="coffee">'
     html += '<section class="coffee-main">'
     html += '<ul>'
     html += '<li class="coffee-id">' + coffee.id + '</li>';
@@ -34,13 +34,16 @@ function renderCoffees(coffees) {
     return html;
 }
 function sortCoffees(){
+    filteredCoffees = [];
     let selectedRoast = roastSelection.value;
     let selectedCountry = countrySelection.value;
     let selectedFlavor = flavorSelection.value;
     coffeeOfferings.forEach(function(coffee) {
-        if ((coffee.roast === selectedRoast || selectedRoast === "--Select--") && (coffee.country === selectedCountry || selectedCountry === "--Select--")) {
-            console.log(coffee);
-            filteredCoffees.push(coffee);
+        if ((coffee.roast === selectedRoast || selectedRoast === "--Select--") && (coffee.country === selectedCountry || selectedCountry === "--Select--") && (coffee.flavorNotes.includes(selectedFlavor) || selectedFlavor === "--Select--")) {
+            //console.log(coffee);
+            if(!filteredCoffees.includes(coffee)){
+                filteredCoffees.push(coffee);
+            }
         }
     });
     //"<div id='coffeetile" + i + "'>" + html + "</div>"
@@ -53,6 +56,27 @@ function resetCoffees(){
     document.getElementById("country-selection").selectedIndex = 0;
     document.getElementById("flavor-selection").selectedIndex = 0;
     sortCoffees();
+}
+
+function gatherFlavorNotes(){
+    coffeeOfferings.forEach(function(coffee){
+        for (let i = 0; i < coffee.flavorNotes.length; i++){
+            if(!flavorNotes.includes(coffee.flavorNotes[i])){
+                flavorNotes.push(coffee.flavorNotes[i]);
+            }
+        }
+    })
+}
+
+function inputFlavorNoteSelector(flavors){
+    flavors.forEach(function (flavor) {
+        let html = '<option>' + flavor + '</option>';
+        console.log(html);
+        console.log(flavorSelection.innerHTML);
+        //return html;
+        flavorSelection.innerHTML += html;
+    })
+
 }
 
 var coffeeOfferings = [
@@ -71,9 +95,13 @@ var coffeeOfferings = [
     {id: "0013", name: "Kerinci Highlands", country: "Sumatra", region: "Mount Kerinci Highlands" , producer: "Various Smallholders", roast: "Dark", flavorNotes: ["Anise", "Ginger", "Guava", "Pineapple"], process: "Honey", variety: "Andung Sari, Tim-Tim, Bor-Bor", elevation:"1300 MASL"},
     {id: "0014", name: "Gayo Highlands", country: "Sumatra", region: "Central Aceh Regency" , producer: "Various Smallholders", roast: "Medium Dark", flavorNotes: ["Clove", "Mango", "Papaya", "White Pepper"], process: "Wet-Hulled", variety: "Ateng P88, Tim-Tim", elevation:"1450 MASL"},
 ];
-
+var flavorNotes = []
 var filteredCoffees = [];
 var coffeeTiles = document.querySelector('#coffee-tiles');
+
+gatherFlavorNotes();
+//console.log(flavorNotes);
+
 
 const submitButton = document.querySelector('#button-submit');
 const resetButton = document.querySelector('#button-reset');
@@ -83,6 +111,9 @@ var countrySelection = document.querySelector('#country-selection');
 var flavorSelection = document.querySelector('#flavor-selection');
 
 coffeeTiles.innerHTML = renderCoffees(coffeeOfferings);
+inputFlavorNoteSelector(flavorNotes);
+console.log(flavorSelection.innerHTML);
+console.log(flavorNotes);
 
 submitButton.addEventListener('click', sortCoffees);
 resetButton.addEventListener('click', resetCoffees);
