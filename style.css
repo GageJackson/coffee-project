@@ -32,7 +32,11 @@
     --fs-search-text: var(--fs-300);
 
 }
-
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 * {
     padding: 0;
     margin: 0;
@@ -46,42 +50,47 @@ h1 {
     color: var(--color-white);
     font-weight: var(--fw-bold);
     font-size: var(--fs-header);
-    margin: 1.5rem 0 0 3rem;
+    margin: 1rem 1rem 0 3rem;
 }
 body {
     background: var(--color-primary-dark);
     font-family: var(--ff-primary);
 }
-article.coffee{
+.coffee{
     height: 20rem;
     width: 15rem;
     color: var(--color-white);
     background-image: var(--color-accent);
     border-radius: 1rem;
-    margin: 1.5rem 3rem 3rem 3rem;
     text-align: center;
     box-shadow: 0 1rem 2rem #010118;
+    display: grid;
+    grid-template-rows: 20% 80%;
 }
-section.coffee-info {
-    height: 13rem;
-    width: 13rem;
+.coffee-main {
+
+}
+
+.coffee-info {
+    width: 15rem;
     color: var(--color-white);
     background: var(--color-primary);
     text-align: left;
     border-radius: 1rem;
     padding:1rem 1rem;
+
 }
-li.coffee-label {
+.coffee-label {
     color: var(--color-primary-light);
     font-size: var(--fs-coffee-attributes);
     font-weight: var(--fw-medium);
     padding-top: 1rem;
 }
-li.coffee-name {
+.coffee-name {
     font-size: var(--fs-coffe-name);
     line-height: 1;
 }
-li.coffee-id {
+.coffee-id {
     font-size: var(--fs-coffee-attributes);
     font-weight: var(--fw-medium);
 }
@@ -89,6 +98,23 @@ li{
     font-size: var(--fs-coffee-properties);
     font-weight: var(--fw-bold);
 }
+
+/* -----------------------------------------------------------*/
+/* Page layout and grids */
+/* -----------------------------------------------------------*/
+html, body {
+    height:100%;
+    overflow: hidden;
+}
+/*Body is, or should be split to header and main horizontally*/
+body {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 6% 94%;
+
+}
+
+/*header is a solid horizontal stripe, contains company word-mark */
 header {
     background: #F44B6C;
 }
@@ -106,29 +132,27 @@ header {
     color: var(--color-primary-light);
     margin-left: 3rem;
 }
-#search-and-add-coffees {
-    background-image: var(--color-accent);
-    height: auto;
-    padding: 4rem 0;
-}
-#container {
+
+/*main is split into 2 sections vertically: main-body and search-and-add-coffees */
+main {
     display: grid;
     grid-template-columns: 70% 30%;
-    height: 93.5vh;
 }
-#display-coffee-tiles {
-    background: blue;
-}
-#coffee-tiles {
-    color: aquamarine;
-    background: aquamarine;
-    display: grid;
-    grid-auto-flow: column;
-}
-
 #main-body {
-    padding-block: 0px;
+    background: chartreuse;
+    display: grid;
+    grid-template-rows: 2% 98%;
 }
-main {
 
+#search-and-add-coffees {
+    background: #ff7d57;
 }
+
+/* main-body is split into 2 sections horizontally h1 and coffee-tiles */
+#coffee-tiles {
+    background: blueviolet;
+    margin-inside: auto;
+    overflow: hidden;
+}
+
+

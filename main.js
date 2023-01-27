@@ -71,9 +71,6 @@ function gatherFlavorNotes(){
 function inputFlavorNoteSelector(flavors){
     flavors.forEach(function (flavor) {
         let html = '<option>' + flavor + '</option>';
-        console.log(html);
-        console.log(flavorSelection.innerHTML);
-        //return html;
         flavorSelection.innerHTML += html;
     })
 
@@ -100,8 +97,6 @@ var filteredCoffees = [];
 var coffeeTiles = document.querySelector('#coffee-tiles');
 
 gatherFlavorNotes();
-//console.log(flavorNotes);
-
 
 const submitButton = document.querySelector('#button-submit');
 const resetButton = document.querySelector('#button-reset');
@@ -112,8 +107,6 @@ var flavorSelection = document.querySelector('#flavor-selection');
 
 coffeeTiles.innerHTML = renderCoffees(coffeeOfferings);
 inputFlavorNoteSelector(flavorNotes);
-console.log(flavorSelection.innerHTML);
-console.log(flavorNotes);
 
 submitButton.addEventListener('click', sortCoffees);
 resetButton.addEventListener('click', resetCoffees);
