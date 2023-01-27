@@ -52,7 +52,7 @@ body {
     background: var(--color-primary-dark);
     font-family: var(--ff-primary);
 }
-div.coffee{
+article.coffee{
     height: 20rem;
     width: 15rem;
     color: var(--color-white);
@@ -62,7 +62,7 @@ div.coffee{
     text-align: center;
     box-shadow: 0 1rem 2rem #010118;
 }
-div.coffee-info {
+section.coffee-info {
     height: 13rem;
     width: 13rem;
     color: var(--color-white);
@@ -106,16 +106,29 @@ header {
     color: var(--color-primary-light);
     margin-left: 3rem;
 }
-#display-coffee-tiles {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    width: min(1200px, 100% - 2rem);
-    margin-inline: auto;
-}
 #search-and-add-coffees {
     background-image: var(--color-accent);
+    height: auto;
+    padding: 4rem 0;
 }
 #container {
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 70% 30%;
+    height: 93.5vh;
+}
+#display-coffee-tiles {
+    background: blue;
+}
+#coffee-tiles {
+    color: aquamarine;
+    background: aquamarine;
+    display: grid;
+    grid-auto-flow: column;
+}
+
+#main-body {
+    padding-block: 0px;
+}
+main {
+
 }

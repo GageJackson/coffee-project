@@ -1,12 +1,18 @@
-function renderCoffeeTile(coffee) {
-    var html = '<div class="coffee">'
+//this function writes the html script for each individual coffee tile
+//ARGUMENTS: coffee- A "coffee" object from filteredCoffees[]
+//RETURNS: html- Html text for each coffee in filteredCoffees[]
+function renderCoffeeTile(coffee, number) {
+    //var html = '<article class="coffee coffee' + number + '">'
+    var html = '<article class="coffee">'
+    html += '<section class="coffee-main">'
     html += '<ul>'
     html += '<li class="coffee-id">' + coffee.id + '</li>';
     html += '<li class="coffee-name">' + coffee.name + '</li>';
     html += '<li class="coffee-id">' + coffee.country + '</li>';
     html += '</ul>'
+    html += '</section>'
 
-    html += '<div class="coffee-info">'
+    html += '<section class="coffee-info">'
     html += '<ul>'
     html += '<li class="coffee-label"> ROAST PROFILE </li>';
     html += '<li>' + coffee.roast + '</li>';
@@ -16,14 +22,14 @@ function renderCoffeeTile(coffee) {
     html += '<li>' + coffee.flavorNotes[2] + '</li>';
     html += '<li>' + coffee.flavorNotes[3] + '</li>';
     html += '</ul>'
-    html += '</div>'
-    html += '</div>';
+    html += '</section>'
+    html += '</article>';
     return html;
 }
 function renderCoffees(coffees) {
     var html = '';
     for(var i = coffees.length - 1; i >= 0; i--) {
-        html += renderCoffeeTile(coffees[i]);
+        html += renderCoffeeTile(coffees[i], i);
     }
     return html;
 }
@@ -37,6 +43,7 @@ function sortCoffees(){
             filteredCoffees.push(coffee);
         }
     });
+    //"<div id='coffeetile" + i + "'>" + html + "</div>"
     coffeeTiles.innerHTML = renderCoffees(filteredCoffees);
 }
 
