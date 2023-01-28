@@ -48,6 +48,25 @@ function sortCoffees(){
     coffeeTiles.innerHTML = renderCoffees(filteredCoffees);
 }
 
+function searchCoffees(){
+    //console.log(searchedCoffee.value);
+    coffeeOfferings.forEach(function (coffee){
+        let namePiece = searchedCoffee.value.toLowerCase().split(" ");
+        console.log(namePiece);
+        let comparePiece = coffee.name.toLowerCase().split(" ");
+        console.log(comparePiece);
+        let myOutput = comparePiece.filter(function (obj){
+            return namePiece.indexOf(obj) !== -1;
+        })
+        console.log(myOutput);
+        if(searchedCoffee.value.toLowerCase() === coffee.name.toLowerCase()){
+            console.log(coffee.name.toLowerCase())
+        } else {
+            console.log("nope");
+        }
+    })
+}
+
 function resetCoffees(){
     filteredCoffees = [];
     document.getElementById("roast-selection").selectedIndex = 0;
@@ -95,12 +114,6 @@ function inputSelectors(selectorArray, selectorHTML){
         selectorHTML.innerHTML += html;
     })
 }
-function inputFlavorNoteSelector(flavors){
-    flavors.forEach(function (flavor) {
-        let html = '<option>' + flavor + '</option>';
-        flavorSelection.innerHTML += html;
-    })
-}
 
 var coffeeOfferings = [
     {id: "0001", name: "Finca La Fazenda Farms", country: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roastProfile: "Medium", flavorNotes: ["Fig", "Fruit Cake", "Mint", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL"},
@@ -123,6 +136,7 @@ var countries = [];
 var roastProfiles = []
 var filteredCoffees = [];
 var coffeeTiles = document.querySelector('#coffee-tiles');
+var searchedCoffee = document.querySelector('#coffeeSearch')
 
 console.log(countries);
 console.log(roastProfiles)
@@ -132,6 +146,7 @@ console.log(roastProfiles)
 
 const submitButton = document.querySelector('#button-submit');
 const resetButton = document.querySelector('#button-reset');
+const searchButton = document.querySelector('#button-search');
 
 var roastSelection = document.querySelector('#roast-selection');
 var countrySelection = document.querySelector('#country-selection');
@@ -141,4 +156,7 @@ coffeeTiles.innerHTML = renderCoffees(coffeeOfferings);
 
 submitButton.addEventListener('click', sortCoffees);
 resetButton.addEventListener('click', resetCoffees);
+searchButton.addEventListener('click', searchCoffees);
+
+
 gatherCoffeeProperties();
