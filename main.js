@@ -24,6 +24,7 @@ function renderCoffeeTile(coffee, number) {
     html += '</ul>'
     html += '</section>'
     html += '</article>';
+    console.log(html);
     return html;
 }
 function renderCoffees(coffees) {

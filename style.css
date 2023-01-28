@@ -3,6 +3,7 @@
     --color-primary: #242A38;
     --color-primary-light: #4E596F;
     --color-primary-dark: #1b1e2a;
+    --color-primary-dark2: #171A25;
     --color-accent: linear-gradient(to bottom right, #ff7d57, #F44B6C);
     --color-white: #fff;
 
@@ -50,15 +51,15 @@ h1 {
     color: var(--color-white);
     font-weight: var(--fw-bold);
     font-size: var(--fs-header);
-    margin: 0 0 0 3rem;
-    height: 75px;
+    margin: 1rem 0 0 3rem;
+    height: 4rem;
 }
 body {
-    background: var(--color-primary-dark);
+    background: var(--color-primary);
     font-family: var(--ff-primary);
 }
 .coffee{
-    height: 20rem;
+    height: 24rem;
     width: 15rem;
     color: var(--color-white);
     background-image: var(--color-accent);
@@ -66,7 +67,9 @@ body {
     text-align: center;
     box-shadow: 0 1rem 2rem #010118;
     display: grid;
-    grid-template-rows: 20% 80%;
+    grid-template-rows: 25% 75%;
+    padding-top: 1rem;
+    margin: 0 1rem 2rem 1rem;
 }
 .coffee-main {
 
@@ -105,7 +108,6 @@ li{
 /* -----------------------------------------------------------*/
 html, body {
     height:100%;
-    overflow: hidden;
 }
 /*Body is, or should be split to header and main horizontally*/
 body {
@@ -115,7 +117,7 @@ body {
 
 /*header is a solid horizontal stripe, contains company word-mark */
 header {
-    background: #F44B6C;
+    background: var(--color-primary-dark);
     height: 75px;
 }
 #company-name {
@@ -140,18 +142,18 @@ main {
     grid-template-columns: 7fr 3fr;
 }
 #main-body {
-    background: chartreuse;
 }
 
 #search-and-add-coffees {
-    background: #ff7d57;
+    background: var(--color-primary-dark);
+    height: 100vh;
 }
 
 /* main-body is split into 2 sections horizontally h1 and coffee-tiles */
 #coffee-tiles {
-    background: blueviolet;
-    margin-inside: auto;
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 
