@@ -77,6 +77,7 @@ function gatherFlavorNotes(){
         for (let i = 0; i < coffee.flavorNotes.length; i++){
             if(!flavorNotes.includes(coffee.flavorNotes[i])){
                 flavorNotes.push(coffee.flavorNotes[i]);
+                flavorNotes.sort();
             }
         }
     })
@@ -85,24 +86,20 @@ function gatherCountries(){
     coffeeOfferings.forEach(function(coffee){
         if(!countries.includes(coffee.country)){
             countries.push(coffee.country);
+            countries.sort();
         }
     })
-}
-function gatherRoastProfiles(){
-    coffeeOfferings.forEach(function(coffee){
-            if(!roastProfiles.includes(coffee.roastProfile)){
-                roastProfiles.push(coffee.roastProfile);
-            }
-    })
-}
-function gatherCoffeeProperties(){
+}function gatherCoffeeProperties(){
+
     gatherFlavorNotes();
     gatherCountries();
-    //gatherRoastProfiles();
 
     inputSelectors(flavorNotes, flavorSelection);
-    //inputSelectors(roastProfiles, roastSelection);
-    inputSelectors(countries, countrySelection)
+    inputSelectors(roastProfiles, roastSelection);
+    inputSelectors(roastProfiles, addRoastSelection);
+    inputSelectors(countries, countrySelection);
+    inputSelectors(allCountries, addCountrySelection);
+
 }
 
 function inputSelectors(selectorArray, selectorHTML){
@@ -123,7 +120,11 @@ function addNewCoffee(){
     newCoffeeName = document.getElementById("add-coffee-input").value;
     newCoffeeCountry = document.getElementById("add-coffee-country-selection").value;
     newCoffeeRoast = document.getElementById("add-coffee-roast-profile-selection").value;
-    newCoffeeFlavors = document.getElementById("add-coffee-flavor-notes").value;
+    let newCoffeeFlavorsString = document.getElementById("add-coffee-flavor-notes").value;
+
+    newCoffeeFlavorsString = newCoffeeFlavorsString.replaceAll(" ", "");
+    newCoffeeFlavors = newCoffeeFlavorsString.split(",");
+    console.log(newCoffeeFlavors);
 
     newCoffee.id = "0000";
     newCoffee.name = newCoffeeName;
@@ -131,6 +132,7 @@ function addNewCoffee(){
     newCoffee.roastProfile = newCoffeeRoast;
     newCoffee.flavorNotes = newCoffeeFlavors;
 
+    console.log(newCoffee.flavorNotes);
 
     coffeeOfferings.push(newCoffee);
 
@@ -156,11 +158,47 @@ var coffeeOfferings = [
 ];
 var flavorNotes = [];
 var countries = [];
-var roastProfiles = []
 var filteredCoffees = [];
 var coffeeTiles = document.querySelector('#coffee-tiles');
 var searchedCoffee = document.querySelector('#coffeeSearch')
-
+const allCountries = [
+    "Bolivia",
+    "Brazil",
+    "Burundi",
+    "China",
+    "Colombia",
+    "Costa Rica",
+    "Cuba",
+    "Ecuador",
+    "El Salvador",
+    "Eritrea",
+    "Ethiopia",
+    "Ethiopia",
+    "Guatemala",
+    "Honduras",
+    "India",
+    "Indonesia",
+    "Jamaica",
+    "Kenya",
+    "Mexico",
+    "Nicaragua",
+    "Panama",
+    "Papua New Guinea",
+    "Peru",
+    "Rwanda",
+    "Sudan",
+    "Tanzania",
+    "Uganda",
+    "Vietnam",
+    "Yemen"
+];
+const roastProfiles = [
+    "Light",
+    "Medium Light",
+    "Medium",
+    "Medium Dark",
+    "Dark"
+]
 
 
 const submitButton = document.querySelector('#button-submit');
@@ -172,6 +210,8 @@ const addCoffeeButton = document.querySelector('#button-add-coffee');
 var roastSelection = document.querySelector('#roast-selection');
 var countrySelection = document.querySelector('#country-selection');
 var flavorSelection = document.querySelector('#flavor-selection');
+var addRoastSelection = document.querySelector('#add-coffee-roast-profile-selection');
+var addCountrySelection = document.querySelector('#add-coffee-country-selection');
 
 coffeeTiles.innerHTML = renderCoffees(coffeeOfferings);
 

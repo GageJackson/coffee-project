@@ -71,7 +71,7 @@ body {
     background-image: var(--color-accent);
     border-radius: 1rem;
     text-align: center;
-    box-shadow: 0 1rem 2rem #010118;
+    box-shadow: 0 .5rem 1rem var(--color-primary-dark2);
     display: grid;
     grid-template-rows: 25% 75%;
     padding-top: 1rem;
