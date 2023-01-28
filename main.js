@@ -49,21 +49,20 @@ function sortCoffees(){
 }
 
 function searchCoffees(){
-    //console.log(searchedCoffee.value);
+    filteredCoffees = []
     coffeeOfferings.forEach(function (coffee){
         let namePiece = searchedCoffee.value.toLowerCase().split(" ");
-        console.log(namePiece);
         let comparePiece = coffee.name.toLowerCase().split(" ");
-        console.log(comparePiece);
         let myOutput = comparePiece.filter(function (obj){
             return namePiece.indexOf(obj) !== -1;
         })
-        console.log(myOutput);
-        if(searchedCoffee.value.toLowerCase() === coffee.name.toLowerCase()){
-            console.log(coffee.name.toLowerCase())
+        if(myOutput.join(" ") === namePiece.join(" ")){
+            console.log("win");
+            filteredCoffees.push(coffee);
         } else {
-            console.log("nope");
+            console.log("lose");
         }
+        coffeeTiles.innerHTML = renderCoffees(filteredCoffees);
     })
 }
 
