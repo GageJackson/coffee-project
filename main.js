@@ -40,7 +40,7 @@ function sortCoffees(){
     let selectedCountry = countrySelection.value;
     let selectedFlavor = flavorSelection.value;
     coffeeOfferings.forEach(function(coffee) {
-        if ((coffee.roastProfile === selectedRoast || selectedRoast === "--Select--") && (coffee.country === selectedCountry || selectedCountry === "--Select--") && (coffee.flavorNotes.includes(selectedFlavor) || selectedFlavor === "--Select--")) {
+        if ((coffee.roastProfile === selectedRoast || selectedRoast === "Roast Profile") && (coffee.country === selectedCountry || selectedCountry === "Coffee Origin") && (coffee.flavorNotes.includes(selectedFlavor) || selectedFlavor === "Flavor Note")) {
             if(!filteredCoffees.includes(coffee)){
                 filteredCoffees.push(coffee);
             }

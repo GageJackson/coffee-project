@@ -22,35 +22,57 @@
                         </div>
                     </section>
                     <section id="search-and-add-coffees">
-                        <h1>Coffee Search</h1>
-                        <label for="coffeeSearch">Search Coffees:</label>
-                        <input type="search" id="coffeeSearch" name="coffeeSearch">
-                        <button id="button-search">Search</button>
-                        <div>
-                            <label for="roast-selection">Roast</label>
-                            <select id="roast-selection">
-                                <option selected>--Select--</option>
-                                <option >Light</option>
-                                <option >Medium Light</option>
-                                <option >Medium</option>
-                                <option >Medium Dark</option>
-                                <option >Dark</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="country-selection">Country</label>
-                            <select id="country-selection">
-                                <option selected>--Select--</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="flavor-selection">Flavor</label>
-                            <select id="flavor-selection">
-                                <option selected>--Select--</option>
-                            </select>
-                        </div>
-                        <button id="button-submit">Submit</button>
-                        <button id="button-reset">Reset</button>
+                        <section>
+                            <h2>Browse Coffees</h2>
+                            <label for="coffeeSearch"></label>
+                            <input type="search" id="coffeeSearch" name="coffeeSearch"placeholder="Search">
+                            <button id="button-search">Search</button>
+                            <div>
+                                <label for="roast-selection"></label>
+                                <select id="roast-selection">
+                                    <option selected>Roast Profile</option>
+                                    <option >Light</option>
+                                    <option >Medium Light</option>
+                                    <option >Medium</option>
+                                    <option >Medium Dark</option>
+                                    <option >Dark</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="country-selection"></label>
+                                <select id="country-selection">
+                                    <option selected>Coffee Origin</option>
+                                </select>
+                                <label for="flavor-selection"></label>
+                                <select id="flavor-selection">
+                                    <option selected>Flavor Note</option>
+                                </select>
+                            </div>
+                            <button id="button-submit">Submit</button>
+                            <button id="button-reset">Reset</button>
+                        </section>
+                        <section>
+                            <h2>Add a New Coffee</h2>
+                            <label for="add-coffee-input"></label>
+                            <input type="text" id="add-coffee-input" name="add-coffee-input" placeholder="Coffee Name">
+                            <div>
+                                <select id="add-coffee-country-selection">
+                                    <option selected>Country</option>
+                                </select>
+                                <select id="add-coffee-roast-profile-selection">
+                                    <option selected>Roast Profile</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="add-coffee-flavor-notes"></label>
+                                <textarea id="add-coffee-flavor-notes" name="add-coffee-flavor-notes" placeholder="Flavor Notes (up to 4, seperate by commas)">
+
+                                </textarea>
+                            </div>
+                            <button id="button-add-coffee">Add Coffee</button>
+
+
+                        </section>
             </section>
     </main>
 

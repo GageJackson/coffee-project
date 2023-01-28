@@ -132,6 +132,7 @@ header {
     font-size: var(--fs-tagline);
     font-weight: var(--fw-medium);
     color: var(--color-primary-light);
+    letter-spacing: .08rem;
     margin-left: 3rem;
 }
 
