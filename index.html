@@ -25,19 +25,22 @@
                         <h2>Browse Coffees</h2>
                         <section id="browse-coffees">
                             <label for="coffeeSearch"></label>
-                            <input type="search" id="coffeeSearch" name="coffeeSearch"placeholder="Search">
+                            <input type="search" id="coffeeSearch" name="coffeeSearch" placeholder="Search">
                             <button id="button-search">Search</button>
-                            <div>
+                            <div id="roast-selector">
                                 <label for="roast-selection"></label>
                                 <select id="roast-selection">
                                     <option selected>Roast Profile</option>
                                 </select>
                             </div>
-                            <div>
+                            <div id="country-selector">
                                 <label for="country-selection"></label>
                                 <select id="country-selection">
                                     <option selected>Coffee Origin</option>
                                 </select>
+                            </div>
+
+                            <div id="flavor-selector">
                                 <label for="flavor-selection"></label>
                                 <select id="flavor-selection">
                                     <option selected>Flavor Note</option>
@@ -62,8 +65,7 @@
                             </div>
                             <div>
                                 <label for="add-coffee-flavor-notes"></label>
-                                <textarea id="add-coffee-flavor-notes" name="add-coffee-flavor-notes" placeholder="Flavor Notes (up to 4, seperate by commas)">
-
+                                <textarea id="add-coffee-flavor-notes" name="add-coffee-flavor-notes" placeholder="Flavor Notes (up to 4, separate by commas)">
                                 </textarea>
                             </div>
                             <button id="button-add-coffee">Add Coffee</button>

@@ -2,7 +2,6 @@
 //ARGUMENTS: coffee- A "coffee" object from filteredCoffees[]
 //RETURNS: html- Html text for each coffee in filteredCoffees[]
 function renderCoffeeTile(coffee, number) {
-    //var html = '<article class="coffee coffee' + number + '">'
     let html = '<article class="coffee">'
     html += '<section class="coffee-main">'
     html += '<ul>'
@@ -76,11 +75,12 @@ function gatherFlavorNotes(){
     coffeeOfferings.forEach(function(coffee){
         for (let i = 0; i < coffee.flavorNotes.length; i++){
             if(!flavorNotes.includes(coffee.flavorNotes[i])){
-                flavorNotes.push(coffee.flavorNotes[i]);
-                flavorNotes.sort();
+                flavorNotes.push(coffee.flavorNotes[i][0].toUpperCase() + coffee.flavorNotes[i].substring(1));
             }
         }
     })
+    flavorNotes.sort();
+
 }
 function gatherCountries(){
     coffeeOfferings.forEach(function(coffee){
@@ -90,19 +90,23 @@ function gatherCountries(){
         }
     })
 }function gatherCoffeeProperties(){
-
     gatherFlavorNotes();
-    gatherCountries();
-
-    inputSelectors(flavorNotes, flavorSelection);
-    inputSelectors(roastProfiles, roastSelection);
-    inputSelectors(roastProfiles, addRoastSelection);
-    inputSelectors(countries, countrySelection);
-    inputSelectors(allCountries, addCountrySelection);
-
+    gatherCountries()
+    initializeSelectors();
 }
 
-function inputSelectors(selectorArray, selectorHTML){
+function initializeSelectors(){
+    inputSelectors(flavorNotes, flavorSelection, "Flavor Note");
+    inputSelectors(roastProfiles, roastSelection, "Roast Profile");
+    inputSelectors(roastProfiles, addRoastSelection, "Roast Profile");
+    inputSelectors(countries, countrySelection, "Coffee Origin");
+    inputSelectors(allCountries, addCountrySelection, "Coffee Origin");
+}
+
+function inputSelectors(selectorArray, selectorHTML, selectedSelector){
+    selectorArray.sort();
+    selectorHTML.innerHTML = '';
+    selectorHTML.innerHTML = '<option selected>' + selectedSelector + '</option>';
     selectorArray.forEach(function (option) {
         let html = '<option>' + option + '</option>';
         selectorHTML.innerHTML += html;
@@ -222,3 +226,4 @@ addCoffeeButton.addEventListener('click', addNewCoffee);
 
 
 gatherCoffeeProperties();
+initializeSelectors();
