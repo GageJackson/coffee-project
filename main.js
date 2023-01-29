@@ -2,27 +2,25 @@
 //ARGUMENTS: coffee- A "coffee" object from filteredCoffees[]
 //RETURNS: html- Html text for each coffee in filteredCoffees[]
 function renderCoffeeTile(coffee, number) {
-    let html = '<article class="coffee">'
+    let html = '<div class="coffee-tile">'
     html += '<section class="coffee-main">'
-    html += '<ul>'
-    html += '<li class="coffee-id">' + coffee.id + '</li>';
-    html += '<li class="coffee-name">' + coffee.name + '</li>';
-    html += '<li class="coffee-id">' + coffee.country + '</li>';
-    html += '</ul>'
+    html += '<p class="coffee-id">' + coffee.id + '</p>';
+    html += '<p class="coffee-name">' + coffee.name + '</p>';
+    html += '<p class="coffee-id">' + coffee.country + '</p>';html += '</ul>'
     html += '</section>'
 
     html += '<section class="coffee-info">'
+    html += '<p class="coffee-label"> ROAST PROFILE </p>';
+    html += '<p>' + coffee.roastProfile + '</p>';
+    html += '<p class="coffee-label"> FLAVOR NOTES </p>';
     html += '<ul>'
-    html += '<li class="coffee-label"> ROAST PROFILE </li>';
-    html += '<li>' + coffee.roastProfile + '</li>';
-    html += '<li class="coffee-label"> FLAVOR NOTES </li>';
     html += '<li>' + coffee.flavorNotes[0] + '</li>';
     html += '<li>' + coffee.flavorNotes[1] + '</li>';
     html += '<li>' + coffee.flavorNotes[2] + '</li>';
     html += '<li>' + coffee.flavorNotes[3] + '</li>';
     html += '</ul>'
     html += '</section>'
-    html += '</article>';
+    html += '</div>';
     return html;
 }
 function renderCoffees(coffees) {
@@ -65,9 +63,9 @@ function searchCoffees(){
 
 function resetCoffees(){
     filteredCoffees = [];
-    document.getElementById("roast-selection").selectedIndex = 0;
-    document.getElementById("country-selection").selectedIndex = 0;
-    document.getElementById("flavor-selection").selectedIndex = 0;
+    document.getElementById("selector-roast-profile").selectedIndex = 0;
+    document.getElementById("selector-coffee-origin").selectedIndex = 0;
+    document.getElementById("selector-flavor-note").selectedIndex = 0;
     sortCoffees();
 }
 
@@ -121,10 +119,10 @@ function addNewCoffee(){
     let newCoffeeFlavors = [];
     let newCoffee ={id:"", name:"", country:"", roastProfile:"", flavorNotes:[]};
 
-    newCoffeeName = document.getElementById("add-coffee-input").value;
-    newCoffeeCountry = document.getElementById("add-coffee-country-selection").value;
-    newCoffeeRoast = document.getElementById("add-coffee-roast-profile-selection").value;
-    let newCoffeeFlavorsString = document.getElementById("add-coffee-flavor-notes").value;
+    newCoffeeName = document.getElementById("input-add-coffee").value;
+    newCoffeeCountry = document.getElementById("add-coffee-origin-selection").value;
+    newCoffeeRoast = document.getElementById("selector-add-coffee-roast-profile").value;
+    let newCoffeeFlavorsString = document.getElementById("input-add-coffee-flavor-notes").value;
 
     newCoffeeFlavorsString = newCoffeeFlavorsString.replaceAll(" ", "");
     newCoffeeFlavors = newCoffeeFlavorsString.split(",");
@@ -163,8 +161,8 @@ var coffeeOfferings = [
 var flavorNotes = [];
 var countries = [];
 var filteredCoffees = [];
-var coffeeTiles = document.querySelector('#coffee-tiles');
-var searchedCoffee = document.querySelector('#coffeeSearch')
+var coffeeTiles = document.querySelector('#tile-collection');
+var searchedCoffee = document.querySelector('#input-search')
 const allCountries = [
     "Bolivia",
     "Brazil",
@@ -211,11 +209,11 @@ const searchButton = document.querySelector('#button-search');
 const addCoffeeButton = document.querySelector('#button-add-coffee');
 
 
-var roastSelection = document.querySelector('#roast-selection');
-var countrySelection = document.querySelector('#country-selection');
-var flavorSelection = document.querySelector('#flavor-selection');
-var addRoastSelection = document.querySelector('#add-coffee-roast-profile-selection');
-var addCountrySelection = document.querySelector('#add-coffee-country-selection');
+var roastSelection = document.querySelector('#selector-roast-profile');
+var countrySelection = document.querySelector('#selector-coffee-origin');
+var flavorSelection = document.querySelector('#selector-flavor-note');
+var addRoastSelection = document.querySelector('#selector-add-coffee-roast-profile');
+var addCountrySelection = document.querySelector('#add-coffee-origin-selection');
 
 coffeeTiles.innerHTML = renderCoffees(coffeeOfferings);
 

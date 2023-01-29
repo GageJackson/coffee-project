@@ -14,61 +14,64 @@
                         <div id="company-name">NIMBUS</div>
                         <div id="company-tagline">COFFEE ROASTING CO</div>
                     </header>
-                    <section id="main-body">
+                    <section id="tile-board">
                         <h1>Coffees on Hand</h1>
-                        <div id="coffee-tiles">
+                        <div id="tile-collection">
                             <!-- JS file inserts coffee tiles here -->
                         </div>
                     </section>
                 </main>
                 <nav>
-                    <section id="search-and-add-coffees">
+                    <section id="sidebar">
                         <h2>Browse Coffees</h2>
-                        <section id="browse-coffees">
-                            <label for="coffeeSearch"></label>
-                            <input type="search" id="coffeeSearch" name="coffeeSearch" placeholder="Search">
+                        <section id="browse-coffees-section">
+                            <label for="input-search"></label>
+                            <input type="search" id="input-search" name="input-search" placeholder="Search">
                             <button id="button-search">Search</button>
-                            <div id="roast-selector">
-                                <label for="roast-selection"></label>
-                                <select id="roast-selection">
+                            <div id="roast-profile-selector-box">
+                                <label for="selector-roast-profile"></label>
+                                <select id="selector-roast-profile">
                                     <option selected>Roast Profile</option>
                                 </select>
                             </div>
-                            <div id="country-selector">
-                                <label for="country-selection"></label>
-                                <select id="country-selection">
+                            <div id="coffee-origin-selector-box">
+                                <label for="selector-coffee-origin"></label>
+                                <select id="selector-coffee-origin">
                                     <option selected>Coffee Origin</option>
                                 </select>
                             </div>
 
-                            <div id="flavor-selector">
-                                <label for="flavor-selection"></label>
-                                <select id="flavor-selection">
+                            <div id="flavor-note-selector-box">
+                                <label for="selector-flavor-note"></label>
+                                <select id="selector-flavor-note">
                                     <option selected>Flavor Note</option>
                                 </select>
                             </div>
                             <button id="button-submit">Submit</button>
                             <button id="button-reset">Reset</button>
                         </section>
+
                         <h2>Add a New Coffee</h2>
-                        <section id="add-coffees">
-                            <div id="add-coffee-input-area">
-                                <label for="add-coffee-input"></label>
-                                <input type="text" id="add-coffee-input" name="add-coffee-input" placeholder="Coffee Name">
+                        <section id="add-coffees-section">
+                            <div id="add-coffee-input-box">
+                                <label for="input-add-coffee"></label>
+                                <input type="text" id="input-add-coffee" name="input-add-coffee" placeholder="Coffee Name">
                             </div>
-                            <div id="add-coffee-country-selector">
-                                <select id="add-coffee-country-selection">
+                            <div id="add-coffee-origin-selector-box">
+                                <label for="selector-add-coffee-origin"></label>
+                                <select id="selector-add-coffee-origin">
                                     <option selected>Country</option>
                                 </select>
                             </div>
-                            <div id="add-coffee-roast-profile-selector">
-                                <select id="add-coffee-roast-profile-selection">
+                            <div id="add-coffee-roast-profile-selector-box">
+                                <label for="selector-add-coffee-roast-profile"></label>
+                                <select id="selector-add-coffee-roast-profile">
                                     <option selected>Roast Profile</option>
                                 </select>
                             </div>
-                            <div id="add-coffee-flavor-notes-area">
-                                <label for="add-coffee-flavor-notes"></label>
-                                <textarea id="add-coffee-flavor-notes" name="add-coffee-flavor-notes" placeholder="Flavor Notes (up to 4, separate by commas)">
+                            <div id="add-coffee-flavor-notes-box">
+                                <label for="input-add-coffee-flavor-notes"></label>
+                                <textarea id="input-add-coffee-flavor-notes" name="input-add-coffee-flavor-notes" placeholder="Flavor Notes (up to 4, separate by commas)">
                                 </textarea>
                             </div>
                             <button id="button-add-coffee">Add Coffee</button>
