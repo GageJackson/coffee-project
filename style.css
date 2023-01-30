@@ -108,8 +108,8 @@ COFFEE TILES CONSTRUCTION AND STYLING
 //////////////////////////////////////////////////////////////
  */
 .coffee-tile{
-    height: 22rem;
-    width: 15rem;
+    height: 20rem;
+    width: 12rem;
     color: var(--color-white);
     background-image: var(--color-accent-gradient);
     border-radius: 1rem;
@@ -118,7 +118,7 @@ COFFEE TILES CONSTRUCTION AND STYLING
     display: grid;
     grid-template-rows: 25% 75%;
     align-content: center;
-    padding-top: 1rem;
+    padding-top: .5rem;
     transition: transform 0.25s ease-in-out;
 }
 .coffee-tile:hover {

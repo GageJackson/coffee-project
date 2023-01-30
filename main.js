@@ -1,7 +1,7 @@
 //this function writes the html script for each individual coffee tile
 //ARGUMENTS: coffee- A "coffee" object from filteredCoffees[]
 //RETURNS: html- Html text for each coffee in filteredCoffees[]
-function composeCoffeeTileHtml(coffee, number) {
+function composeCoffeeTileHtml(coffee) {
     let html = '<div class="coffee-tile">'
     html += '<section class="coffee-tile-head">'
     html += '<p class="coffee-label-head">' + coffee.id + '</p>';
@@ -26,7 +26,7 @@ function composeCoffeeTileHtml(coffee, number) {
 function composeCoffeeTileCollectionHtml(coffees) {
     let html = '';
     for(let i = coffees.length - 1; i >= 0; i--) {
-        html += composeCoffeeTileHtml(coffees[i], i);
+        html += composeCoffeeTileHtml(coffees[i]);
     }
     return html;
 }
@@ -87,6 +87,22 @@ function gatherCountries(){
     })
     countries.sort();
 }
+
+function generateNextCoffeeId(){
+    nextCoffeeId = "";
+    nextCoffeeId += (parseInt(coffeeOfferings[coffeeOfferings.length-1].id) + 1);
+    console.log(nextCoffeeId);
+    switch(nextCoffeeId.length){
+        case 1:
+            return nextCoffeeId = "000" + nextCoffeeId;
+        case 2:
+            return nextCoffeeId = "00" + nextCoffeeId;
+        case 3:
+            return nextCoffeeId = "0" + nextCoffeeId;
+        case 4:
+            return nextCoffeeId = "" + nextCoffeeId;
+    }
+}
 function gatherCoffeeProperties(){
     gatherFlavorNotes();
     gatherCountries()
@@ -94,15 +110,17 @@ function gatherCoffeeProperties(){
 }
 
 function initializeSelectors(){
-    createSelectorHtml(flavorNotes, flavorSelection, "Flavor Note");
-    createSelectorHtml(roastProfiles, roastSelection, "Roast Profile");
-    createSelectorHtml(roastProfiles, addRoastSelection, "Roast Profile");
-    createSelectorHtml(countries, countrySelection, "Coffee Origin");
-    createSelectorHtml(allCountries, addCountrySelection, "Coffee Origin");
+    createSelectorHtml(flavorNotes, flavorSelection, "Flavor Note", true);
+    createSelectorHtml(roastProfiles, roastSelection, "Roast Profile", false);
+    createSelectorHtml(roastProfiles, addRoastSelection, "Roast Profile", false);
+    createSelectorHtml(countries, countrySelection, "Coffee Origin", true);
+    createSelectorHtml(allCountries, addCountrySelection, "Coffee Origin", true);
 }
 
-function createSelectorHtml(selectorArray, selectorHTML, selectedSelector){
-    selectorArray.sort();
+function createSelectorHtml(selectorArray, selectorHTML, selectedSelector, sortSelectorArray){
+    if(sortSelectorArray){
+        selectorArray.sort();
+    }
     selectorHTML.innerHTML = '';
     selectorHTML.innerHTML = '<option selected>' + selectedSelector + '</option>';
     selectorArray.forEach(function (option) {
@@ -127,7 +145,7 @@ function addNewCoffee(){
     newCoffeeFlavorsString = newCoffeeFlavorsString.replaceAll(" ", "");
     newCoffeeFlavors = newCoffeeFlavorsString.split(",");
 
-    newCoffee.id = "0000";
+    newCoffee.id = generateNextCoffeeId();
     newCoffee.name = newCoffeeName;
     newCoffee.country = newCoffeeCountry;
     newCoffee.roastProfile = newCoffeeRoast;
@@ -155,6 +173,7 @@ let coffeeOfferings = [
     {id: "0013", name: "Kerinci Highlands", country: "Sumatra", region: "Mount Kerinci Highlands" , producer: "Various Smallholders", roastProfile: "Dark", flavorNotes: ["Herbal", "Floral", "Citrus", "Tropical Fruit"], process: "Honey", variety: "Andung Sari, Tim-Tim, Bor-Bor", elevation:"1300 MASL"},
     {id: "0014", name: "Gayo Highlands", country: "Sumatra", region: "Central Aceh Regency" , producer: "Various Smallholders", roastProfile: "Medium Dark", flavorNotes: ["Herbal", "Tropical Fruit", "Orange", "Floral"], process: "Wet-Hulled", variety: "Ateng P88, Tim-Tim", elevation:"1450 MASL"},
 ];
+let nextCoffeeId = "";
 let flavorNotes = [];
 let countries = [];
 let filteredCoffees = [];
