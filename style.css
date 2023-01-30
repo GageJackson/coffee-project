@@ -107,7 +107,7 @@ input[type="text"]::placeholder, input[type="search"]::placeholder{
 COFFEE TILES CONSTRUCTION AND STYLING
 //////////////////////////////////////////////////////////////
  */
-.coffee-tile{
+.coffee-tile-front{
     height: 20rem;
     width: 12rem;
     color: var(--color-white);
@@ -121,9 +121,48 @@ COFFEE TILES CONSTRUCTION AND STYLING
     padding-top: .5rem;
     transition: transform 0.25s ease-in-out;
 }
-.coffee-tile:hover {
+.coffee-tile-front:hover {
     transform: scale(1.1);
     border: .25rem solid var(--color-accent);
+}
+.coffee-tile-back{
+    height: 20rem;
+    width: 12rem;
+    color: var(--color-white);
+    background-image: var(--color-primary);
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 .5rem 1rem var(--color-primary-dark2);
+    display: grid;
+    grid-template-rows: 85% 15%;
+    align-content: center;
+    padding: 0 1rem 1rem 1rem;
+    transition: transform 0.25s ease-in-out;
+}
+.coffee-tile-back:hover {
+    transform: scale(1.1);
+    border: .25rem solid var(--color-accent);
+}
+#button-coffee-more-info{
+    width: 100%;
+    height: 2rem;
+    grid-row: 5;
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+}
+#button-coffee-more-info-back{
+    width: 100%;
+    height: 2rem;
+    grid-column: 1/2;
+    grid-row: 2;
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+}
+#coffee-tile-back-info{
+    width: 100%;
+    height: 100%;
+    grid-column: 1/2;
+    grid-row: 1;
 }
 
 .coffee-tile-body {
@@ -133,13 +172,15 @@ COFFEE TILES CONSTRUCTION AND STYLING
     text-align: left;
     border-radius: 1rem;
     padding:1rem 1rem;
+    display: grid;
+    grid-template-rows: 20% 20% 20% 20% 20%;
 
 }
 .coffee-label-body {
     color: var(--color-primary-light);
     font-size: var(--fs-coffee-label);
     font-weight: var(--fw-medium);
-    padding-top: 1rem;
+    padding-top: .5rem;
 }
 .coffee-name {
     font-size: var(--fs-coffe-name);

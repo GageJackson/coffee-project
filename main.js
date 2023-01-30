@@ -1,8 +1,8 @@
 //this function writes the html script for each individual coffee tile
 //ARGUMENTS: coffee- A "coffee" object from filteredCoffees[]
 //RETURNS: html- Html text for each coffee in filteredCoffees[]
-function composeCoffeeTileHtml(coffee) {
-    let html = '<div class="coffee-tile">'
+function composeCoffeeTileFrontHtml(coffee, number) {
+    let html = '<div class="coffee-tile-front">'
     html += '<section class="coffee-tile-head">'
     html += '<p class="coffee-label-head">' + coffee.id + '</p>';
     html += '<p class="coffee-name">' + coffee.name + '</p>';
@@ -10,27 +10,72 @@ function composeCoffeeTileHtml(coffee) {
     html += '</section>'
 
     html += '<section class="coffee-tile-body">'
+    html += '<div>';
     html += '<p class="coffee-label-body"> ROAST PROFILE </p>';
     html += '<p class="coffee-properties-body">' + coffee.roastProfile + '</p>';
+    html += '</div>'
+    html += '<div>';
     html += '<p class="coffee-label-body"> FLAVOR NOTES </p>';
     html += '<ul>'
     html += '<li class="coffee-properties-body">' + coffee.flavorNotes[0] + '</li>';
     html += '<li class="coffee-properties-body">' + coffee.flavorNotes[1] + '</li>';
     html += '<li class="coffee-properties-body">' + coffee.flavorNotes[2] + '</li>';
     html += '<li class="coffee-properties-body">' + coffee.flavorNotes[3] + '</li>';
-    html += '</ul>'
-    html += '</section>'
+    html += '</ul>';
+    html += '</div>';
+    html += '<button id="button-coffee-more-info">More Info</button>';
+    //console.log('<button id="button-coffee-more-info' + number + '">More Info</button>');
+    html += '</section>';
     html += '</div>';
     return html;
 }
-function composeCoffeeTileCollectionHtml(coffees) {
+function composeCoffeeTileBackHtml(coffee, number){
+    let html = '<div class="coffee-tile-back">';
+    html += '<section class="coffee-tile-back-info">'
+    html += '<p class="coffee-label-body"> REGION </p>';
+    html += '<p class="coffee-properties-body">' + coffee.region + '</p>';
+    html += '<p class="coffee-label-body"> PRODUCER </p>';
+    html += '<p class="coffee-properties-body">' + coffee.producer + '</p>';
+    html += '<p class="coffee-label-body"> PROCESS </p>';
+    html += '<p class="coffee-properties-body">' + coffee.process + '</p>';
+    html += '<p class="coffee-label-body"> VARIETAL </p>';
+    html += '<p class="coffee-properties-body">' + coffee.variety + '</p>';
+    html += '<p class="coffee-label-body"> ELEVATION </p>';
+    html += '<p class="coffee-properties-body">' + coffee.elevation + '</p>';
+    html += '</section>'
+    html += '<button id="button-coffee-more-info-back">Other Side</button>';
+    //console.log('<button id="button-coffee-more-info"' + number + '>Other Side</button>');
+    html += '</div>';
+    return html;
+}
+function composeCoffeeTileCollectionHtml(coffees, frontSideOfTile) {
+    console.log("Compose HTML is: " + frontSideOfTile)
     let html = '';
-    for(let i = coffees.length - 1; i >= 0; i--) {
-        html += composeCoffeeTileHtml(coffees[i]);
+    if(frontSideOfTile){
+        for(let i = coffees.length - 1; i >= 0; i--) {
+            html += composeCoffeeTileFrontHtml(coffees[i],i);
+        }
+    } else {
+        for(let i = coffees.length - 1; i >= 0; i--) {
+            html += composeCoffeeTileBackHtml(coffees[i],i);
+        }
     }
     return html;
 }
+function flipCoffeeTile(){
+    console.log("click");
+    if(frontSideOfTile === true){
+        frontSideOfTile = false;
+    } else {
+        frontSideOfTile = true;
+    }
+    console.log(frontSideOfTile);
+    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees,frontSideOfTile);
+    createInfoButtons();
+}
+
 function sortCoffeeTiles(){
+   console.log("Before Error")
     filteredCoffees = [];
     let selectedRoast = roastSelection.value;
     let selectedCountry = countrySelection.value;
@@ -42,7 +87,9 @@ function sortCoffeeTiles(){
             }
         }
     });
-    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees);
+    filteredCoffees = filteredCoffees.sort((a,b) => a.id < b.id ? 1 : -1);
+    console.log("error?");
+    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees,frontSideOfTile);
 }
 
 function searchCoffeeTiles(){
@@ -107,6 +154,23 @@ function gatherCoffeeProperties(){
     gatherFlavorNotes();
     gatherCountries()
     initializeSelectors();
+    sortCoffeeTiles();
+    createInfoButtons();
+}
+
+function  createInfoButtons(){
+    if (frontSideOfTile){
+        let infoButtons = document.querySelectorAll('#button-coffee-more-info')
+        for (let i = 0; i < infoButtons.length; i++){
+            infoButtons[i].addEventListener("click",flipCoffeeTile);
+        }
+    }else {
+        let infoButtons = document.querySelectorAll('#button-coffee-more-info-back')
+        for (let i = 0; i < infoButtons.length; i++){
+            infoButtons[i].addEventListener("click",flipCoffeeTile);
+        }
+    }
+
 }
 
 function initializeSelectors(){
@@ -132,18 +196,13 @@ function createSelectorHtml(selectorArray, selectorHTML, selectedSelector, sortS
 function addNewCoffee(){
     let newCoffee ={id:"", name:"", country:"", roastProfile:"", flavorNotes:[]};
 
-    let newCoffeeName = "";
-    let newCoffeeCountry = "";
-    let newCoffeeRoast = "";
-    let newCoffeeFlavors = [];
-
-    newCoffeeName = document.getElementById("input-add-coffee").value;
-    newCoffeeCountry = document.getElementById("selector-add-coffee-origin").value;
-    newCoffeeRoast = document.getElementById("selector-add-coffee-roast-profile").value;
+    let newCoffeeName = document.getElementById("input-add-coffee").value;
+    let newCoffeeCountry = document.getElementById("selector-add-coffee-origin").value;
+    let newCoffeeRoast = document.getElementById("selector-add-coffee-roast-profile").value;
     let newCoffeeFlavorsString = document.getElementById("input-add-coffee-flavor-notes").value;
 
     newCoffeeFlavorsString = newCoffeeFlavorsString.replaceAll(" ", "");
-    newCoffeeFlavors = newCoffeeFlavorsString.split(",");
+    let newCoffeeFlavors = newCoffeeFlavorsString.split(",");
 
     newCoffee.id = generateNextCoffeeId();
     newCoffee.name = newCoffeeName;
@@ -154,7 +213,6 @@ function addNewCoffee(){
     coffeeOfferings.push(newCoffee);
 
     gatherCoffeeProperties();
-    sortCoffeeTiles();
 }
 
 let coffeeOfferings = [
@@ -177,6 +235,7 @@ let nextCoffeeId = "";
 let flavorNotes = [];
 let countries = [];
 let filteredCoffees = [];
+let frontSideOfTile = true;
 let coffeeTiles = document.querySelector('#tile-collection');
 let searchedCoffee = document.querySelector('#input-search')
 const allCountries = [
@@ -225,19 +284,18 @@ const searchButton = document.querySelector('#button-search');
 const addCoffeeButton = document.querySelector('#button-add-coffee');
 
 
+
 let roastSelection = document.querySelector('#selector-roast-profile');
 let countrySelection = document.querySelector('#selector-coffee-origin');
 let flavorSelection = document.querySelector('#selector-flavor-note');
 let addRoastSelection = document.querySelector('#selector-add-coffee-roast-profile');
 let addCountrySelection = document.querySelector('#selector-add-coffee-origin');
 
-coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(coffeeOfferings);
+coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(coffeeOfferings, frontSideOfTile);
 
 submitButton.addEventListener('click', sortCoffeeTiles);
 resetButton.addEventListener('click', resetCoffeeTiles);
 searchButton.addEventListener('click', searchCoffeeTiles);
 addCoffeeButton.addEventListener('click', addNewCoffee);
 
-
 gatherCoffeeProperties();
-initializeSelectors();
