@@ -34,6 +34,19 @@
     --fs-button: var(--fs-300);
     --fs-search-text: var(--fs-300);
 
+    /* Established Sizes and Widths */
+    --size-nav-bar-element-height: 2rem;
+    --size-coffee-tile-height: 20rem;
+    --size-coffee-tile-width: 12rem;
+
+    /* Established Spacing of elements*/
+    --gap-coffee-tiles: 3rem;
+    --gap-nav-bar-elements: .5rem;
+    --margin-nav-bar-section: 10rem;
+    --margin-left-main-section: 3rem;
+    --padding-input-elements: .5rem;
+    --border-radius-buttons: .35rem;
+    --border-radius-coffee-tiles: .5rem;
 }
 *,
 *::before,
@@ -53,7 +66,8 @@ h1 {
     color: var(--color-white);
     font-weight: var(--fw-bold);
     font-size: var(--fs-header);
-    margin: 1rem 0 0 3rem;
+    margin-top: 1rem;
+    margin-left: var(--margin-left-main-section);
     height: 4rem;
     user-select: none;
 }
@@ -61,13 +75,15 @@ h2 {
     color: var(--color-white);
     font-weight: var(--fw-bold);
     font-size: var(--fs-450);
-    height: 2.25rem;
+    height: var(--size-nav-bar-element-height);
     user-select: none;
+    grid-column: span 6;
+    grid-row: 1;
 }
 
 button {
     background-image: var(--color-accent-gradient);
-    border-radius: .35rem;
+    border-radius: var(--border-radius-buttons);
     border: none;
     color: var(--color-white);
     font-size: var(--fs-button);
@@ -78,28 +94,8 @@ button:hover {
     color: var(--color-primary-dark);
 }
 
-select {
-    background: var(--color-primary);
-    color: var(--color-primary-light);
-    border: none;
-    padding-left: .5rem;
-}
-
 textarea {
-    background: var(--color-primary);
-    border: none;
-    color: var(--color-primary-light);
-    padding-left: .5rem;
     resize: none;
-}
-input[type="text"], input[type="search"]{
-    background: var(--color-primary);
-    color: var(--color-accent);
-    border: none;
-    padding-left: .5rem;
-}
-input[type="text"]::placeholder, input[type="search"]::placeholder{
-    color: var(--color-primary-light);
 }
 
 /*
@@ -107,52 +103,49 @@ input[type="text"]::placeholder, input[type="search"]::placeholder{
 COFFEE TILES CONSTRUCTION AND STYLING
 //////////////////////////////////////////////////////////////
  */
-.coffee-tile-front{
-    height: 20rem;
-    width: 12rem;
+
+.coffee-tile{
+    height: var(--size-coffee-tile-height);
+    width: var(--size-coffee-tile-width);
     color: var(--color-white);
     background-image: var(--color-accent-gradient);
-    border-radius: 1rem;
+    border-radius: var(--border-radius-coffee-tiles);
     text-align: center;
     box-shadow: 0 .5rem 1rem var(--color-primary-dark2);
     display: grid;
-    grid-template-rows: 25% 75%;
     align-content: center;
-    padding-top: .5rem;
     transition: transform 0.5s ease-in-out;
+}
+.coffee-tile-front{
+    background-image: var(--color-accent-gradient);
+    display: grid;
+    grid-template-rows: 25% 75%;
+    padding-top: .5rem;
 }
 .coffee-tile-front:hover {
     transform: scale(1.1);
-    border: .25rem solid var(--color-accent);
+    outline: .25rem solid var(--color-accent);
 }
 .coffee-tile-back{
-    height: 20rem;
-    width: 12rem;
-    color: var(--color-white);
     background-image: var(--color-primary);
-    border-radius: 1rem;
-    text-align: center;
-    box-shadow: 0 .5rem 1rem var(--color-primary-dark2);
-    display: grid;
+    border-radius: var(--border-radius-coffee-tiles);
     grid-template-rows: 85% 15%;
-    align-content: center;
     padding: 0 1rem 1rem 1rem;
-    transition: transform 0.5s ease-in-out;
 }
 .coffee-tile-back:hover {
     transform: scale(1.1);
-    border: .25rem solid var(--color-accent);
+    outline: .25rem solid var(--color-accent);
 }
 #button-coffee-more-info{
     width: 100%;
-    height: 2rem;
+    height: var(--size-nav-bar-element-height);
     grid-row: 5;
     background: var(--color-primary-light);
     color: var(--color-primary-dark);
 }
 #button-coffee-more-info-back{
     width: 100%;
-    height: 2rem;
+    height: var(--size-nav-bar-element-height);
     grid-column: 1/2;
     grid-row: 2;
     background: var(--color-primary-light);
@@ -170,7 +163,7 @@ COFFEE TILES CONSTRUCTION AND STYLING
     color: var(--color-white);
     background: var(--color-primary);
     text-align: left;
-    border-radius: 1rem;
+    border-radius: var(--border-radius-coffee-tiles);
     padding:1rem 1rem;
     display: grid;
     grid-template-rows: 20% 20% 20% 20% 20%;
@@ -242,7 +235,7 @@ header {
     font-weight: var(--fw-logo);
     font-style: italic;
     color: var(--color-white);
-    margin-left: 3rem;
+    margin-left: var(--margin-left-main-section);
     line-height: 1;
 }
 #company-tagline {
@@ -250,7 +243,7 @@ header {
     font-weight: var(--fw-medium);
     color: var(--color-primary-light);
     letter-spacing: .08rem;
-    margin-left: 3rem;
+    margin-left: var(--margin-left-main-section);
 }
 
 /*
@@ -268,7 +261,7 @@ Holds Tiles
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 3rem;
+    gap: var(--gap-coffee-tiles);
 }
 /*
 //////////////////////////////////////////////////////////////
@@ -282,6 +275,14 @@ Section holds Browse Coffees and Add Coffees Sections
     height: 100vh;
     padding: 9.5rem 2rem;
     z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+}
+.navBarInputs{
+    background: var(--color-primary);
+    border: none;
+    color: var(--color-primary-light);
+    padding-left: var(--padding-input-elements);
 }
 
 /*
@@ -289,51 +290,50 @@ BROWSE COFFEES SECTION GRID
  */
 .navBarAssets{
     width: 100%;
-    height: 2rem;
+    height: var(--size-nav-bar-element-height);
 }
 #browse-coffees-section {
     display: grid;
-    grid-template: repeat(6, 1fr) / auto;
+    grid-template: repeat(5, 1fr) / auto;
     height: 20%;
-    margin-bottom: 10rem;
-    gap: .5rem;
-    padding: .25rem;
+    margin-bottom: var(--margin-nav-bar-section);
+    gap: var(--gap-nav-bar-elements);
     right: 0;
 }
 #input-search {
     grid-column: 1/6;
-    grid-row: 1;
-    height: 2rem;
+    grid-row: 2;
+    height: var(--size-nav-bar-element-height);
 }
 #button-search {
     grid-column: 6;
-    grid-row: 1;
+    grid-row: 2;
 }
 #roast-profile-selector-box {
     grid-column: span 6;
-    grid-row: 2;
+    grid-row: 3;
 }
 
 #coffee-origin-selector-box {
     grid-column: span 3;
-    grid-row: 3;
+    grid-row: 4;
 }
 
 #flavor-note-selector-box {
     grid-column: span 3;
-    grid-row: 3;
+    grid-row: 4;
 }
 #button-reset {
     grid-column: 1/4;
-    grid-row: 4;
+    grid-row: 5;
     color: var(--color-primary);
     background: var(--color-primary-light);
-    height: 2rem;
+    height: var(--size-nav-bar-element-height);
 }
 #button-submit {
     grid-column: 4/7;
-    grid-row: 4;
-    height: 2rem;
+    grid-row: 5;
+    height: var(--size-nav-bar-element-height);
 }
 
 /*
@@ -341,36 +341,35 @@ ADD COFFEES SECTION GRID
 */
 #add-coffees-section {
     display: grid;
-    grid-template: repeat(6, 1fr) / auto;
-    height: 22.5%;
-    margin-bottom: 10rem;
-    gap: .5rem;
-    padding: .25rem;
+    grid-template: repeat(9, 1fr) / auto;
+    height: 30%;
+    margin-bottom: var(--margin-nav-bar-section);
+    gap: var(--gap-nav-bar-elements);
 }
 
 #add-coffee-input-box {
     grid-column: span 6;
-    grid-row: 1;
+    grid-row: 2;
 }
 #add-coffee-producer-box{
     grid-column: span 6;
-    grid-row: 2;
+    grid-row: 3;
 }
 #add-coffee-origin-selector-box {
     grid-column: span 3;
-    grid-row: 3;
+    grid-row: 4;
 }
 #add-coffee-roast-profile-selector-box {
     grid-column: span 3;
-    grid-row: 3;
+    grid-row: 4;
 }
 #add-coffee-region-box{
     grid-column: span 6;
-    grid-row: 4;
+    grid-row: 5;
 }
 #add-coffee-flavor-notes-box {
     grid-column: 1/7;
-    grid-row: 5/6;
+    grid-row: 6/7;
 
 }
 #input-add-coffee-flavor-notes {
@@ -379,21 +378,21 @@ ADD COFFEES SECTION GRID
 
 #add-coffee-varietal-box{
     grid-column: span 3;
-    grid-row: 6;
+    grid-row: 7;
 }
 #add-coffee-altitude-box{
     grid-column: span 3;
-    grid-row: 6;
+    grid-row: 7;
 
 }
 #add-coffee-processing-method-box{
     grid-column: span 6;
-    grid-row: 7;
+    grid-row: 8;
 }
 #button-add-coffee {
     grid-column: 4/7;
-    grid-row: 8;
-    height: 2rem;
+    grid-row: 9;
+    height: var(--size-nav-bar-element-height);
 }
 
 

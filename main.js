@@ -2,7 +2,7 @@
 //ARGUMENTS: coffee- A "coffee" object from filteredCoffees[]
 //RETURNS: html- Html text for each coffee in filteredCoffees[]
 function composeCoffeeTileFrontHtml(coffee, number) {
-    let html = '<div class="coffee-tile-front">'
+    let html = '<div class="coffee-tile-front coffee-tile">'
     html += '<section class="coffee-tile-head">'
     html += '<p class="coffee-label-head">' + coffee.id + '</p>';
     html += '<p class="coffee-name">' + coffee.name + '</p>';
@@ -30,7 +30,7 @@ function composeCoffeeTileFrontHtml(coffee, number) {
     return html;
 }
 function composeCoffeeTileBackHtml(coffee, number){
-    let html = '<div class="coffee-tile-back">';
+    let html = '<div class="coffee-tile-back coffee-tile">';
     html += '<section class="coffee-tile-back-info">'
     html += '<p class="coffee-label-body"> REGION </p>';
     html += '<p class="coffee-properties-body">' + coffee.region + '</p>';
