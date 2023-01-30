@@ -51,69 +51,112 @@ function composeCoffeeTileBackHtml(coffee, number){
 function composeCoffeeTileCollectionHtml(coffees, frontSideOfTile) {
     console.log("Compose HTML is: " + frontSideOfTile)
     let html = '';
-    if(frontSideOfTile){
         for(let i = coffees.length - 1; i >= 0; i--) {
-            html += composeCoffeeTileFrontHtml(coffees[i],i);
+            if(frontSideOfTile){
+                html += composeCoffeeTileFrontHtml(coffees[i],i);
+            } else {
+                html += composeCoffeeTileBackHtml(coffees[i],i);
+            }
         }
-    } else {
-        for(let i = coffees.length - 1; i >= 0; i--) {
-            html += composeCoffeeTileBackHtml(coffees[i],i);
-        }
-    }
     return html;
 }
 function flipCoffeeTile(){
-    console.log("click");
     if(frontSideOfTile === true){
         frontSideOfTile = false;
     } else {
         frontSideOfTile = true;
     }
-    console.log(frontSideOfTile);
-    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees,frontSideOfTile);
+    resetCoffeeTilesInnerHtml();
     createInfoButtons();
 }
-
+function resetCoffeeTilesInnerHtml(){
+    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees,frontSideOfTile);
+}
 function sortCoffeeTiles(){
-   console.log("Before Error")
     filteredCoffees = [];
     let selectedRoast = roastSelection.value;
     let selectedCountry = countrySelection.value;
     let selectedFlavor = flavorSelection.value;
     coffeeOfferings.forEach(function(coffee) {
-        if ((coffee.roastProfile === selectedRoast || selectedRoast === "Roast Profile") && (coffee.country === selectedCountry || selectedCountry === "Coffee Origin") && (coffee.flavorNotes.includes(selectedFlavor) || selectedFlavor === "Flavor Note")) {
+        if ((coffee.roastProfile === selectedRoast || selectedRoast === "Roast Profile") && (coffee.country === selectedCountry || selectedCountry === "Origin") && (coffee.flavorNotes.includes(selectedFlavor) || selectedFlavor === "Flavor Note")) {
             if(!filteredCoffees.includes(coffee)){
                 filteredCoffees.push(coffee);
             }
         }
     });
     filteredCoffees = filteredCoffees.sort((a,b) => a.id < b.id ? 1 : -1);
-    console.log("error?");
-    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees,frontSideOfTile);
+    document.getElementById("input-search").value = "";
+    resetCoffeeTilesInnerHtml();
 }
 
 function searchCoffeeTiles(){
     filteredCoffees = []
     coffeeOfferings.forEach(function (coffee){
         let userSearchInput = searchedCoffee.value.toLowerCase().split(" ");
-        let databaseSearchComparison = coffee.name.toLowerCase().split(" ");
-        let userSearchMatches = databaseSearchComparison.filter(function (obj){
-            return userSearchInput.indexOf(obj) !== -1;
-        })
-        if(userSearchMatches.join(" ") === userSearchInput.join(" ")){
-            filteredCoffees.push(coffee);
-        } else {
+        console.log(userSearchInput);
+        for(let i = 1; i < 11; i++){
+            let databaseSearchComparison = cycleThroughCoffeeProperties(coffee, i);
+            console.log(databaseSearchComparison);
+            let userSearchMatches = databaseSearchComparison.filter(function (obj){
+                return userSearchInput.indexOf(obj) !== -1;
+            })
+            if(userSearchMatches.join(" ") === userSearchInput.join(" ")){
+                filteredCoffees.push(coffee);
+            } else {
+            }
         }
-        coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees);
+
+        resetCoffeeTilesInnerHtml();
     })
 }
+function cycleThroughCoffeeProperties(coffee, number){
+    switch(number){
+        case 1:
+            return coffee.id.toLowerCase().split(" ");
+        case 2:
+            return coffee.name.toLowerCase().split(" ");
+        case 3:
+            return coffee.country.toLowerCase().split(" ");
+        case 4:
+            return coffee.region.toLowerCase().split(" ");
+        case 5:
+            return coffee.producer.toLowerCase().split(" ");
+        case 6:
+            return coffee.roastProfile.toLowerCase().split(" ");
+        case 7:
+            return coffee.process.toLowerCase().split(" ");
+        case 8:
+            return coffee.variety.toLowerCase().split(" ");
+        case 9:
+            return coffee.elevation.toLowerCase().split(" ");
+        case 10:
+            console.log(coffee.flavorNotes);
+            let lowercaseArray = [];
+            for(let i = 0; i < coffee.flavorNotes.length; i++){
+                lowercaseArray.push(coffee.flavorNotes[i].toLowerCase());
+            }
+            return lowercaseArray;
+    }
+}
 
-function resetCoffeeTiles(){
+function clearBrowseCoffeeFields(){
     filteredCoffees = [];
+    document.getElementById("input-search").value = "";
     document.getElementById("selector-roast-profile").selectedIndex = 0;
     document.getElementById("selector-coffee-origin").selectedIndex = 0;
     document.getElementById("selector-flavor-note").selectedIndex = 0;
     sortCoffeeTiles();
+}
+function clearAddCoffeeFields(){
+    document.getElementById("input-add-coffee").value = "";
+    document.getElementById("input-add-coffee-producer").value = "";
+    document.getElementById("selector-add-coffee-origin").value = "";
+    document.getElementById("selector-add-coffee-roast-profile").value = "";
+    document.getElementById("input-add-coffee-region").value = "";
+    document.getElementById("input-add-coffee-flavor-notes").value = "";
+    document.getElementById("input-add-coffee-varietal").value = "";
+    document.getElementById("input-add-coffee-altitude").value = "";
+    document.getElementById("input-add-coffee-processing-method").value = "";
 }
 
 function gatherFlavorNotes(){
@@ -177,8 +220,8 @@ function initializeSelectors(){
     createSelectorHtml(flavorNotes, flavorSelection, "Flavor Note", true);
     createSelectorHtml(roastProfiles, roastSelection, "Roast Profile", false);
     createSelectorHtml(roastProfiles, addRoastSelection, "Roast Profile", false);
-    createSelectorHtml(countries, countrySelection, "Coffee Origin", true);
-    createSelectorHtml(allCountries, addCountrySelection, "Coffee Origin", true);
+    createSelectorHtml(countries, countrySelection, "Origin", true);
+    createSelectorHtml(allCountries, addCountrySelection, "Origin", true);
 }
 
 function createSelectorHtml(selectorArray, selectorHTML, selectedSelector, sortSelectorArray){
@@ -197,21 +240,33 @@ function addNewCoffee(){
     let newCoffee ={id:"", name:"", country:"", roastProfile:"", flavorNotes:[]};
 
     let newCoffeeName = document.getElementById("input-add-coffee").value;
+    let newCoffeeProducer = document.getElementById("input-add-coffee-producer").value;
     let newCoffeeCountry = document.getElementById("selector-add-coffee-origin").value;
     let newCoffeeRoast = document.getElementById("selector-add-coffee-roast-profile").value;
+    let newCoffeeRegion = document.getElementById("input-add-coffee-region").value;
     let newCoffeeFlavorsString = document.getElementById("input-add-coffee-flavor-notes").value;
+    let newCoffeeVarietal = document.getElementById("input-add-coffee-varietal").value;
+    let newCoffeeAltitude = document.getElementById("input-add-coffee-altitude").value;
+    let newCoffeeProcessingMethod = document.getElementById("input-add-coffee-processing-method").value;
+
+
 
     newCoffeeFlavorsString = newCoffeeFlavorsString.replaceAll(" ", "");
     let newCoffeeFlavors = newCoffeeFlavorsString.split(",");
 
     newCoffee.id = generateNextCoffeeId();
     newCoffee.name = newCoffeeName;
+    newCoffee.producer = newCoffeeProducer
     newCoffee.country = newCoffeeCountry;
     newCoffee.roastProfile = newCoffeeRoast;
+    newCoffee.region = newCoffeeRegion;
     newCoffee.flavorNotes = newCoffeeFlavors;
+    newCoffee.variety = newCoffeeVarietal;
+    newCoffee.elevation = newCoffeeAltitude;
+    newCoffee.process = newCoffeeProcessingMethod;
 
     coffeeOfferings.push(newCoffee);
-
+    clearAddCoffeeFields();
     gatherCoffeeProperties();
 }
 
@@ -294,7 +349,7 @@ let addCountrySelection = document.querySelector('#selector-add-coffee-origin');
 coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(coffeeOfferings, frontSideOfTile);
 
 submitButton.addEventListener('click', sortCoffeeTiles);
-resetButton.addEventListener('click', resetCoffeeTiles);
+resetButton.addEventListener('click', clearBrowseCoffeeFields);
 searchButton.addEventListener('click', searchCoffeeTiles);
 addCoffeeButton.addEventListener('click', addNewCoffee);
 

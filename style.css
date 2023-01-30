@@ -75,16 +75,17 @@ h2 {
     color: var(--color-white);
     font-weight: var(--fw-bold);
     font-size: var(--fs-450);
-    height: var(--size-nav-bar-element-height);
     user-select: none;
     grid-column: span 6;
     grid-row: 1;
+    margin-bottom: .5rem;
 }
 
 button {
     background-image: var(--color-accent-gradient);
     border-radius: var(--border-radius-buttons);
     border: none;
+    height: var(--size-nav-bar-element-height);
     color: var(--color-white);
     font-size: var(--fs-button);
     font-weight: var(--fw-bold);
@@ -138,14 +139,12 @@ COFFEE TILES CONSTRUCTION AND STYLING
 }
 #button-coffee-more-info{
     width: 100%;
-    height: var(--size-nav-bar-element-height);
     grid-row: 5;
     background: var(--color-primary-light);
     color: var(--color-primary-dark);
 }
 #button-coffee-more-info-back{
     width: 100%;
-    height: var(--size-nav-bar-element-height);
     grid-column: 1/2;
     grid-row: 2;
     background: var(--color-primary-light);
@@ -197,7 +196,7 @@ Page layout and grids
 html, body {
     height:100%;
 }
-/*Body is, or should be split to header and main horizontally*/
+
 body {
 display: grid;
     grid-auto-flow: column;
@@ -228,6 +227,7 @@ header {
     box-shadow: 0 .5rem 1rem var(--color-primary-dark2);
     position: fixed;
     user-select: none;
+    padding: .25rem;
     z-index: 1;
 }
 #company-name {
@@ -303,7 +303,6 @@ BROWSE COFFEES SECTION GRID
 #input-search {
     grid-column: 1/6;
     grid-row: 2;
-    height: var(--size-nav-bar-element-height);
 }
 #button-search {
     grid-column: 6;
@@ -328,12 +327,10 @@ BROWSE COFFEES SECTION GRID
     grid-row: 5;
     color: var(--color-primary);
     background: var(--color-primary-light);
-    height: var(--size-nav-bar-element-height);
 }
 #button-submit {
     grid-column: 4/7;
     grid-row: 5;
-    height: var(--size-nav-bar-element-height);
 }
 
 /*
@@ -392,7 +389,6 @@ ADD COFFEES SECTION GRID
 #button-add-coffee {
     grid-column: 4/7;
     grid-row: 9;
-    height: var(--size-nav-bar-element-height);
 }
 
 
