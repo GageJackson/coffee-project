@@ -49,7 +49,6 @@ function composeCoffeeTileBackHtml(coffee, number){
     return html;
 }
 function composeCoffeeTileCollectionHtml(coffees, frontSideOfTile) {
-    console.log("Compose HTML is: " + frontSideOfTile)
     let html = '';
         for(let i = coffees.length - 1; i >= 0; i--) {
             if(frontSideOfTile){
@@ -87,16 +86,15 @@ function sortCoffeeTiles(){
     filteredCoffees = filteredCoffees.sort((a,b) => a.id < b.id ? 1 : -1);
     document.getElementById("input-search").value = "";
     resetCoffeeTilesInnerHtml();
+    createInfoButtons();
 }
 
 function searchCoffeeTiles(){
     filteredCoffees = []
     coffeeOfferings.forEach(function (coffee){
         let userSearchInput = searchedCoffee.value.toLowerCase().split(" ");
-        console.log(userSearchInput);
         for(let i = 1; i < 11; i++){
             let databaseSearchComparison = cycleThroughCoffeeProperties(coffee, i);
-            console.log(databaseSearchComparison);
             let userSearchMatches = databaseSearchComparison.filter(function (obj){
                 return userSearchInput.indexOf(obj) !== -1;
             })
@@ -105,9 +103,10 @@ function searchCoffeeTiles(){
             } else {
             }
         }
-
+        filteredCoffees = filteredCoffees.sort((a,b) => a.id < b.id ? 1 : -1);
         resetCoffeeTilesInnerHtml();
     })
+    createInfoButtons();
 }
 function cycleThroughCoffeeProperties(coffee, number){
     switch(number){
@@ -130,7 +129,6 @@ function cycleThroughCoffeeProperties(coffee, number){
         case 9:
             return coffee.elevation.toLowerCase().split(" ");
         case 10:
-            console.log(coffee.flavorNotes);
             let lowercaseArray = [];
             for(let i = 0; i < coffee.flavorNotes.length; i++){
                 lowercaseArray.push(coffee.flavorNotes[i].toLowerCase());
@@ -146,6 +144,7 @@ function clearBrowseCoffeeFields(){
     document.getElementById("selector-coffee-origin").selectedIndex = 0;
     document.getElementById("selector-flavor-note").selectedIndex = 0;
     sortCoffeeTiles();
+    createInfoButtons();
 }
 function clearAddCoffeeFields(){
     document.getElementById("input-add-coffee").value = "";
@@ -203,11 +202,14 @@ function gatherCoffeeProperties(){
 
 function  createInfoButtons(){
     if (frontSideOfTile){
+        console.log("test1")
         let infoButtons = document.querySelectorAll('#button-coffee-more-info')
         for (let i = 0; i < infoButtons.length; i++){
+            console.log(i)
             infoButtons[i].addEventListener("click",flipCoffeeTile);
         }
     }else {
+        console.log("test2")
         let infoButtons = document.querySelectorAll('#button-coffee-more-info-back')
         for (let i = 0; i < infoButtons.length; i++){
             infoButtons[i].addEventListener("click",flipCoffeeTile);
