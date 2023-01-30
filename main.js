@@ -1,6 +1,19 @@
-//this function writes the html script for each individual coffee tile
-//ARGUMENTS: coffee- A "coffee" object from filteredCoffees[]
-//RETURNS: html- Html text for each coffee in filteredCoffees[]
+/*
+//////////////////////////////////////////////////////////////////////////////////////
+This section Composes the Coffee Tile Html for the Front and Back Side of the Coffee Tile
+//////////////////////////////////////////////////////////////////////////////////////
+ */
+function composeCoffeeTileCollectionHtml(coffees, frontSideOfTile) {
+    let html = '';
+    for(let i = coffees.length - 1; i >= 0; i--) {
+        if(frontSideOfTile){
+            html += composeCoffeeTileFrontHtml(coffees[i],i);
+        } else {
+            html += composeCoffeeTileBackHtml(coffees[i],i);
+        }
+    }
+    return html;
+}
 function composeCoffeeTileFrontHtml(coffee, number) {
     let html = '<div class="coffee-tile-front coffee-tile">'
     html += '<section class="coffee-tile-head">'
@@ -48,17 +61,7 @@ function composeCoffeeTileBackHtml(coffee, number){
     html += '</div>';
     return html;
 }
-function composeCoffeeTileCollectionHtml(coffees, frontSideOfTile) {
-    let html = '';
-        for(let i = coffees.length - 1; i >= 0; i--) {
-            if(frontSideOfTile){
-                html += composeCoffeeTileFrontHtml(coffees[i],i);
-            } else {
-                html += composeCoffeeTileBackHtml(coffees[i],i);
-            }
-        }
-    return html;
-}
+
 function flipCoffeeTile(){
     if(frontSideOfTile === true){
         frontSideOfTile = false;
@@ -143,8 +146,7 @@ function clearBrowseCoffeeFields(){
     document.getElementById("selector-roast-profile").selectedIndex = 0;
     document.getElementById("selector-coffee-origin").selectedIndex = 0;
     document.getElementById("selector-flavor-note").selectedIndex = 0;
-    sortCoffeeTiles();
-    createInfoButtons();
+    updateTiles();
 }
 function clearAddCoffeeFields(){
     document.getElementById("input-add-coffee").value = "";
@@ -192,7 +194,7 @@ function generateNextCoffeeId(){
             return nextCoffeeId = "" + nextCoffeeId;
     }
 }
-function gatherCoffeeProperties(){
+function updateTiles(){
     gatherFlavorNotes();
     gatherCountries()
     initializeSelectors();
@@ -202,14 +204,11 @@ function gatherCoffeeProperties(){
 
 function  createInfoButtons(){
     if (frontSideOfTile){
-        console.log("test1")
         let infoButtons = document.querySelectorAll('#button-coffee-more-info')
         for (let i = 0; i < infoButtons.length; i++){
-            console.log(i)
             infoButtons[i].addEventListener("click",flipCoffeeTile);
         }
     }else {
-        console.log("test2")
         let infoButtons = document.querySelectorAll('#button-coffee-more-info-back')
         for (let i = 0; i < infoButtons.length; i++){
             infoButtons[i].addEventListener("click",flipCoffeeTile);
@@ -269,7 +268,7 @@ function addNewCoffee(){
 
     coffeeOfferings.push(newCoffee);
     clearAddCoffeeFields();
-    gatherCoffeeProperties();
+    updateTiles();
 }
 
 let coffeeOfferings = [
@@ -295,6 +294,7 @@ let filteredCoffees = [];
 let frontSideOfTile = true;
 let coffeeTiles = document.querySelector('#tile-collection');
 let searchedCoffee = document.querySelector('#input-search')
+
 const allCountries = [
     "Bolivia",
     "Brazil",
@@ -334,13 +334,10 @@ const roastProfiles = [
     "Dark"
 ]
 
-
 const submitButton = document.querySelector('#button-submit');
 const resetButton = document.querySelector('#button-reset');
 const searchButton = document.querySelector('#button-search');
 const addCoffeeButton = document.querySelector('#button-add-coffee');
-
-
 
 let roastSelection = document.querySelector('#selector-roast-profile');
 let countrySelection = document.querySelector('#selector-coffee-origin');
@@ -348,11 +345,9 @@ let flavorSelection = document.querySelector('#selector-flavor-note');
 let addRoastSelection = document.querySelector('#selector-add-coffee-roast-profile');
 let addCountrySelection = document.querySelector('#selector-add-coffee-origin');
 
-coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(coffeeOfferings, frontSideOfTile);
-
 submitButton.addEventListener('click', sortCoffeeTiles);
 resetButton.addEventListener('click', clearBrowseCoffeeFields);
 searchButton.addEventListener('click', searchCoffeeTiles);
 addCoffeeButton.addEventListener('click', addNewCoffee);
 
-gatherCoffeeProperties();
+updateTiles();
