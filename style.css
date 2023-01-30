@@ -28,10 +28,10 @@
     --fs-logo : var(--fs-700);
     --fs-tagline: var(--fs-400);
     --fs-coffe-name: var(--fs-450);
-    --fs-coffee-attributes: var(--fs-300);
+    --fs-coffee-label: var(--fs-300);
     --fs-coffee-properties: var(--fs-400);
     --fs-header: var(--fs-600);
-    --fs-button: var(--fs-400);
+    --fs-button: var(--fs-300);
     --fs-search-text: var(--fs-300);
 
 }
@@ -64,10 +64,49 @@ h2 {
     height: 2.25rem;
     user-select: none;
 }
-body {
-    background: var(--color-primary);
-    font-family: var(--ff-primary);
+
+button {
+    background-image: var(--color-accent-gradient);
+    border-radius: .35rem;
+    border: none;
+    color: var(--color-white);
+    font-size: var(--fs-button);
+    font-weight: var(--fw-bold);
 }
+
+button:hover {
+    color: var(--color-primary-dark);
+}
+
+select {
+    background: var(--color-primary);
+    color: var(--color-primary-light);
+    border: none;
+    padding-left: .5rem;
+}
+
+textarea {
+    background: var(--color-primary);
+    border: none;
+    color: var(--color-primary-light);
+    padding-left: .5rem;
+    resize: none;
+}
+input[type="text"], input[type="search"]{
+    background: var(--color-primary);
+    color: var(--color-accent);
+    border: none;
+    padding-left: .5rem;
+}
+input[type="text"]::placeholder, input[type="search"]::placeholder{
+    color: var(--color-primary-light);
+}
+
+/*
+//////////////////////////////////////////////////////////////
+COFFEE TILES CONSTRUCTION AND STYLING
+//////////////////////////////////////////////////////////////
+ */
 .coffee-tile{
     height: 22rem;
     width: 15rem;
@@ -87,7 +126,7 @@ body {
     border: .25rem solid var(--color-accent);
 }
 
-.coffee-info {
+.coffee-tile-body {
     width: 100%;
     color: var(--color-white);
     background: var(--color-primary);
@@ -96,9 +135,9 @@ body {
     padding:1rem 1rem;
 
 }
-.coffee-label {
+.coffee-label-body {
     color: var(--color-primary-light);
-    font-size: var(--fs-coffee-attributes);
+    font-size: var(--fs-coffee-label);
     font-weight: var(--fw-medium);
     padding-top: 1rem;
 }
@@ -107,18 +146,20 @@ body {
     font-weight: var(--fw-bold);
     line-height: 1;
 }
-.coffee-id {
-    font-size: var(--fs-coffee-attributes);
+.coffee-label-head {
+    font-size: var(--fs-coffee-label);
     font-weight: var(--fw-medium);
 }
-li{
+.coffee-properties-body{
     font-size: var(--fs-coffee-properties);
     font-weight: var(--fw-bold);
 }
 
-/* -----------------------------------------------------------*/
-/* Page layout and grids */
-/* -----------------------------------------------------------*/
+/*
+//////////////////////////////////////////////////////////////
+Page layout and grids
+//////////////////////////////////////////////////////////////
+*/
 html, body {
     height:100%;
 }
@@ -127,10 +168,25 @@ body {
 display: grid;
     grid-auto-flow: column;
     grid-template-columns: 7fr 3fr;
-
+    background: var(--color-primary);
+    font-family: var(--ff-primary);
 }
 
-/*header is a solid horizontal stripe, contains company word-mark */
+/*
+//////////////////////////////////////////////////////////////
+MAIN SECTION
+Section holds Header & Tile Board Sections
+//////////////////////////////////////////////////////////////
+ */
+main {
+    display: grid;
+    grid-auto-flow: row;
+}
+
+/*
+HEADER SECTION
+Holds company name logo and tagline
+*/
 header {
     background: var(--color-primary);
     height: 75px;
@@ -156,22 +212,15 @@ header {
     margin-left: 3rem;
 }
 
-/*main is split into 2 sections vertically: main-body and search-and-add-coffees */
-main {
-    display: grid;
-    grid-auto-flow: row;
-}
+/*
+TILE BOARD SECTION
+Holds Tiles
+ */
 #tile-board {
     padding-top: 5rem;
 }
 
-#sidebar {
-    position: fixed;
-    background: var(--color-primary-dark);
-    height: 100vh;
-    padding: 9.5rem 2rem;
-    z-index: 2;
-}
+
 
 /* main-body is split into 2 sections horizontally h1 and coffee-tiles */
 #tile-collection {
@@ -180,41 +229,18 @@ main {
     justify-content: center;
     gap: 3rem;
 }
-
-
-button {
-    background-image: var(--color-accent-gradient);
-    border-radius: .35rem;
-    border: none;
-    color: var(--color-white);
-    font-size: var(--fs-button);
-    font-weight: var(--fw-bold);
-}
-button:hover {
-    color: var(--color-primary-dark);
-}
-select {
-    background: var(--color-primary);
-    color: var(--color-primary-light);
-    border: none;
-    padding-left: .5rem;
-}
-
-textarea {
-    background: var(--color-primary);
-    border: none;
-    color: var(--color-primary-light);
-    padding-left: .5rem;
-    resize: none;
-}
-input[type="text"], input[type="search"]{
-    background: var(--color-primary);
-    border: none;
-    color: var(--color-accent);
-    padding-left: .5rem;
-}
-input[type="text"]::placeholder, input[type="search"]::placeholder{
-    color: var(--color-primary-light);
+/*
+//////////////////////////////////////////////////////////////
+SIDEBAR SECTION
+Section holds Browse Coffees and Add Coffees Sections
+//////////////////////////////////////////////////////////////
+ */
+#sidebar {
+    position: fixed;
+    background: var(--color-primary-dark);
+    height: 100vh;
+    padding: 9.5rem 2rem;
+    z-index: 2;
 }
 
 /*
@@ -297,7 +323,7 @@ ADD COFFEES SECTION GRID
     grid-column: span 3;
     grid-row: 2;
 }
-#add-coffee-origin-selection{
+#selector-add-coffee-origin{
     width: 100%;
     height: 100%;
 }
