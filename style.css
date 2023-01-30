@@ -287,6 +287,10 @@ Section holds Browse Coffees and Add Coffees Sections
 /*
 BROWSE COFFEES SECTION GRID
  */
+.navBarAssets{
+    width: 100%;
+    height: 2rem;
+}
 #browse-coffees-section {
     display: grid;
     grid-template: repeat(6, 1fr) / auto;
@@ -294,10 +298,12 @@ BROWSE COFFEES SECTION GRID
     margin-bottom: 10rem;
     gap: .5rem;
     padding: .25rem;
+    right: 0;
 }
 #input-search {
     grid-column: 1/6;
     grid-row: 1;
+    height: 2rem;
 }
 #button-search {
     grid-column: 6;
@@ -307,37 +313,27 @@ BROWSE COFFEES SECTION GRID
     grid-column: span 6;
     grid-row: 2;
 }
-#selector-roast-profile {
-    width: 100%;
-    height: 100%;
-}
+
 #coffee-origin-selector-box {
     grid-column: span 3;
     grid-row: 3;
-}
-#selector-coffee-origin {
-    width: 100%;
-    height: 100%;
 }
 
 #flavor-note-selector-box {
     grid-column: span 3;
     grid-row: 3;
 }
-#selector-flavor-note {
-    width: 100%;
-    height: 100%;
-}
-
 #button-reset {
     grid-column: 1/4;
     grid-row: 4;
     color: var(--color-primary);
     background: var(--color-primary-light);
+    height: 2rem;
 }
 #button-submit {
     grid-column: 4/7;
     grid-row: 4;
+    height: 2rem;
 }
 
 /*
@@ -353,42 +349,51 @@ ADD COFFEES SECTION GRID
 }
 
 #add-coffee-input-box {
-    grid-column: 1/7;
+    grid-column: span 6;
     grid-row: 1;
 }
-#input-add-coffee {
-    width: 100%;
-    height: 100%;
+#add-coffee-producer-box{
+    grid-column: span 6;
+    grid-row: 2;
 }
 #add-coffee-origin-selector-box {
     grid-column: span 3;
-    grid-row: 2;
-}
-#selector-add-coffee-origin{
-    width: 100%;
-    height: 100%;
+    grid-row: 3;
 }
 #add-coffee-roast-profile-selector-box {
     grid-column: span 3;
-    grid-row: 2;
+    grid-row: 3;
 }
-#selector-add-coffee-roast-profile {
-    width: 100%;
-    height: 100%;
+#add-coffee-region-box{
+    grid-column: span 6;
+    grid-row: 4;
 }
 #add-coffee-flavor-notes-box {
     grid-column: 1/7;
-    grid-row: 3/4;
+    grid-row: 5/6;
 
 }
 #input-add-coffee-flavor-notes {
-    height: 100%;
-    width: 100%;
+    height: 4rem;
+}
+
+#add-coffee-varietal-box{
+    grid-column: span 3;
+    grid-row: 6;
+}
+#add-coffee-altitude-box{
+    grid-column: span 3;
+    grid-row: 6;
+
+}
+#add-coffee-processing-method-box{
+    grid-column: span 6;
+    grid-row: 7;
 }
 #button-add-coffee {
     grid-column: 4/7;
-    grid-row: 4;
-    height: 100%;
+    grid-row: 8;
+    height: 2rem;
 }
 
 
