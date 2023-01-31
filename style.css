@@ -28,7 +28,7 @@
 
     --fs-logo : var(--fs-700);
     --fs-tagline: var(--fs-400);
-    --fs-coffe-name: var(--fs-450);
+    --fs-coffe-name: var(--fs-400);
     --fs-coffee-label: var(--fs-300);
     --fs-coffee-properties: var(--fs-350);
     --fs-header: var(--fs-600);
@@ -119,36 +119,62 @@ COFFEE TILES CONSTRUCTION AND STYLING
     background-image: var(--color-accent-gradient);
     border-radius: var(--border-radius-coffee-tiles);
     text-align: center;
-    box-shadow: 0 .5rem 1rem var(--color-primary-dark2);
+    box-shadow: 0 .5rem 1rem .15rem var(--color-primary-dark2);
     display: grid;
     align-content: center;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s ease;
 }
 .coffee-tile-front{
     background-image: var(--color-accent-gradient);
     display: grid;
     grid-template-rows: 25% 75%;
     padding-top: .5rem;
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+
 }
-.coffee-tile-front:hover {
+.coffee-tile-front::after,
+.coffee-tile-back::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: -1;
+    box-shadow: 0 .5rem 1rem .35rem var(--color-primary-dark2);
+    transition: opacity 1s ease;
+}
+.coffee-tile-front:hover{
     transform: scale(1.1);
-    outline: .25rem solid var(--color-accent);
+    /*outline: .25rem solid var(--color-accent);*/
+}
+.coffee-tile-front:hover::after, .coffee-tile-back:hover::after{
+    opacity: 1;
 }
 .coffee-tile-back{
     background-image: var(--color-primary);
     border-radius: var(--border-radius-coffee-tiles);
     grid-template-rows: 85% 15%;
     padding: 0 1rem 1rem 1rem;
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+
 }
 .coffee-tile-back:hover {
     transform: scale(1.1);
-    outline: .25rem solid var(--color-accent);
+    /*outline: .25rem solid var(--color-accent);*/
+}
+#button-reset,
+#button-coffee-more-info-back,
+#button-coffee-more-info-front {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
 }
 #button-coffee-more-info-front{
     width: 100%;
     grid-row: 5;
-    background: var(--color-primary-light);
-    color: var(--color-primary-dark);
 }
 #button-coffee-more-info-back{
     width: 100%;
@@ -157,6 +183,13 @@ COFFEE TILES CONSTRUCTION AND STYLING
     background: var(--color-primary-light);
     color: var(--color-primary-dark);
 }
+#button-reset:hover,
+#button-coffee-more-info-front:hover,
+#button-coffee-more-info-back:hover {
+    color: var(--color-white);
+    outline: .1rem solid var(--color-accent);
+}
+
 #coffee-tile-back-info{
     width: 100%;
     height: 100%;
@@ -185,10 +218,12 @@ COFFEE TILES CONSTRUCTION AND STYLING
     font-size: var(--fs-coffe-name);
     font-weight: var(--fw-bold);
     line-height: 1;
+    margin: .1rem;
 }
 .coffee-label-head {
     font-size: var(--fs-coffee-label);
     font-weight: var(--fw-medium);
+    padding: .1rem;
 }
 .coffee-properties-body{
     font-size: var(--fs-coffee-properties);
