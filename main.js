@@ -5,16 +5,18 @@ This section Composes the Coffee Tile Html for the Front and Back Side of the Co
  */
 function composeCoffeeTileCollectionHtml(coffees, frontSideOfTile) {
     let html = '';
-    for(let i = coffees.length - 1; i >= 0; i--) {
+    for(let i = coffees.length- 1 ; i >= 0; i--) {
         if(frontSideOfTile){
-            html += composeCoffeeTileFrontHtml(coffees[i],i);
+            html += composeCoffeeTileFrontHtml(coffees[i]);
         } else {
-            html += composeCoffeeTileBackHtml(coffees[i],i);
+            html += composeCoffeeTileBackHtml(coffees[i]);
         }
     }
     return html;
 }
-function flipCoffeeTile(){
+function flipCoffeeTile(e){
+    console.log("click");
+    console.log(e.target.id);
     if(frontSideOfTile === true){
         frontSideOfTile = false;
     } else {
@@ -23,7 +25,23 @@ function flipCoffeeTile(){
     updateCoffeeTilesInnerHtml();
     updateInfoButtons();
 }
-function composeCoffeeTileFrontHtml(coffee, number) {
+function flipCoffeeTile2(e){
+    //button-coffee-more-info-front-04
+    let clickedButton = e.target.id;
+    if (frontSideTiles.includes(clickedButton)){
+        frontSideTiles.remove(clickedButton);
+        backSideTiles.push(clickedButton);
+    } else if(backSideTiles.includes(clickedButton)) {
+        backSideTiles.remove(clickedButton);
+        frontSideTiles.push(clickedButton);
+    }
+}
+
+function initializeTilesToFront(){
+
+}
+
+function composeCoffeeTileFrontHtml(coffee) {
     let html = '<div class="coffee-tile-front coffee-tile">'
     html += '<section class="coffee-tile-head">'
     html += '<p class="coffee-label-head">' + coffee.id + '</p>';
@@ -45,15 +63,15 @@ function composeCoffeeTileFrontHtml(coffee, number) {
     html += '<li class="coffee-properties-body">' + capitalizeStrings(coffee.flavorNotes[3]) + '</li>';
     html += '</ul>';
     html += '</div>';
-    html += '<button id="button-coffee-more-info-front">More Info</button>';
-    //html += '<button id="button-coffee-more-info-front' + number + '">Other Side</button>';
+    //html += '<button id="button-coffee-more-info-front">More Info</button>';
+    html += '<button id=' + coffee.buttons[0] + ' class="button-coffee-more-info-front">More Info</button>';
     //console.log("Front Test" + '<button id="button-coffee-more-info-front' + number + '">Other Side</button>');
     html += '</section>';
 
     html += '</div>';
     return html;
 }
-function composeCoffeeTileBackHtml(coffee, number){
+function composeCoffeeTileBackHtml(coffee){
     let html = '<div class="coffee-tile-back coffee-tile">';
     html += '<section class="coffee-tile-back-info">'
     html += '<p class="coffee-label-body"> REGION </p>';
@@ -67,8 +85,9 @@ function composeCoffeeTileBackHtml(coffee, number){
     html += '<p class="coffee-label-body"> ELEVATION </p>';
     html += '<p class="coffee-properties-body">' + capitalizeStrings(coffee.elevation) + '</p>';
     html += '</section>'
-    html += '<button id="button-coffee-more-info-back">Other Side</button>';
-    //html += '<button id="button-coffee-more-info-back' + number + '">Other Side</button>';
+    html += '<button id=' + coffee.buttons[1] + ' class="button-coffee-more-info-back">More Info</button>';
+    //html += '<button id="button-coffee-more-info-back">Other Side</button>';
+    //html += '<button id="button-coffee-more-info-back' + number + '" class="button-coffee-more-info-front">Other Side</button>';
     //console.log("Back Test" + '<button id="button-coffee-more-info' + number + '">Other Side</button>');
     html += '</div>';
     return html;
@@ -124,9 +143,10 @@ Coffee Offering Array and displays Coffee tiles with user-input
  */
 function searchCoffeeTiles(){
     filteredCoffees = []
+    let numberOfCoffeeProperties = 11;
     coffeeOfferings.forEach(function (coffee){
         let userSearchInput = searchedCoffee.value.toLowerCase().split(" ");
-        for(let i = 1; i < 11; i++){
+        for(let i = 1; i < numberOfCoffeeProperties; i++){
             let databaseSearchComparison = cycleThroughCoffeeProperties(coffee, i);
             let userSearchMatches = databaseSearchComparison.filter(function (obj){
                 return userSearchInput.indexOf(obj) !== -1;
@@ -274,10 +294,10 @@ function updateTiles(){
     updateCountries()
     initializeSelectors();
     sortCoffeeTiles();
-    updateInfoButtons();
 }
 function updateCoffeeTilesInnerHtml(){
-    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees,frontSideOfTile);
+    //TODO: composeCoffeeTileCollectionHtml(filteredCoffees,frontSideOfTile);
+    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees, frontSideOfTile);
 }
 function updateFlavorNotes(){
     coffeeOfferings.forEach(function(coffee){
@@ -311,66 +331,58 @@ function updateNextCoffeeId(){
             return nextCoffeeId = "" + nextCoffeeId;
     }
 }
-function  updateInfoButtons(){
-    if (frontSideOfTile){
-        let infoButtons = document.querySelectorAll('#button-coffee-more-info-front')
-        for (let i = 0; i < infoButtons.length; i++){
-            infoButtons[i].addEventListener("click",flipCoffeeTile);
-        }
-    }else {
-        let infoButtons = document.querySelectorAll('#button-coffee-more-info-back')
-        for (let i = 0; i < infoButtons.length; i++){
-            infoButtons[i].addEventListener("click",flipCoffeeTile);
-        }
-    }
-}
 
-function updateInfoButtons2(){
-    console.log("called");
-    console.log(nextCoffeeId);
-    for(let i = 0; i < parseInt(nextCoffeeId) - 1; i++){
-        if(frontSideOfTile){
-            console.log("front")
-            infoButtons.push("button-coffee-more-info-front" + i);
-        } else {
-            console.log("back")
-            infoButtons.push("button-coffee-more-info-back" + i);
-        }
-    }
+function updateInfoButtons(){
+    //console.log("called");
+    //console.log(nextCoffeeId);
+    infoButtons = [];
+    //console.log("filtered: " + filteredCoffees);
+        filteredCoffees.forEach(function (coffee){
+            //console.log(coffee.tileFront);
+            if(coffee.tileFront){
+                infoButtons.push(coffee.buttons[0]);
+                //console.log("front: " + infoButtons);
+            } else {
+                infoButtons.push(coffee.buttons[1]);
+                //console.log("back: " + infoButtons);
+            }
+        })
+     // frontSideOfTile
+    //console.log("after: " + infoButtons);
+
     infoButtons.forEach(function (button){
-        console.log(typeof button);
         let newButton = document.querySelector('#' + button);
-        //button.addEventListener("click",flipCoffeeTile)
         newButton.addEventListener("click",flipCoffeeTile);
     })
 }
-
 /*
 //////////////////////////////////////////////////////////////////////////////////////
 This section holds all of my variables
 //////////////////////////////////////////////////////////////////////////////////////
  */
 let coffeeOfferings = [
-    {id: "0001", name: "Finca La Fazenda Farms", country: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roastProfile: "Medium", flavorNotes: ["Dried Fruit", "Sweet", "Floral", "Citrus"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL"},
-    {id: "0002", name: "Sitio Baixado", country: "Brazil", region: "Cristina" , producer: "Helisson Afonso Da Silva", roastProfile: "Medium Dark", flavorNotes: ["Caramel","Chocolate","Tropical Fruit", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1300 MASL"},
-    {id: "0003", name: "El Alirio", country: "Colombia", region: "Huila" , producer: "John Fredy Chaguala", roastProfile: "Medium Light", flavorNotes: ["Banana", "Citrus", "Orange", "Tropical Fruit"], process: "Honey", variety: "Pink Bourbon", elevation:"1620 MASL"},
-    {id: "0004", name: "Santa Isabel", country: "Colombia", region: "Antioquia" , producer: "Don Fernando Echavarria", roastProfile: "Light", flavorNotes: ["Banana", "Grape", "Sweet", "White Wine"], process: "Pulped Natural", variety: "Castillo", elevation:"1850 MASL"},
-    {id: "0005", name: "Guji Hambela", country: "Ethiopia", region: "Oromia" , producer: "Various Smallholders", roastProfile: "Medium Light", flavorNotes: ["Stone Fruit", "Berry", "Nut", "Chocolate"], process: "Pulped Natural", variety: "Heirloom", elevation:"1650 MASL"},
-    {id: "0006", name: "Finca Pojoptetac", country: "Guatemala", region: "Huehuetenango" , producer: "Walter Francisco Garcia", roastProfile: "Medium", flavorNotes: ["Nut", "Berry","Honey","Malty"], process: "Washed", variety: "Bourbon, Caturra, Pache", elevation:"1600 MASL"},
-    {id: "0007", name: "Finca San Jose del Lago", country: "Guatemala", region: "Lake Atitlan" , producer: "Eduardo Cabera", roastProfile: "Medium", flavorNotes: ["Nut", "Sweet", "Chocolate", "Orange"], process: "Washed", variety: "Caturra, Typica, Bourbon", elevation:"1820 MASL"},
-    {id: "0008", name: "Las Guacamayas", country: "Guatemala", region: "Jutiapa" , producer: "Amilcar Romero", roastProfile: "Dark", flavorNotes: ["Chocolate", "Tropical Fruit", "Berry", "Grape"], process: "Natural Anerobic Fermentation", variety: "Orange Bourbon", elevation:"1650 MASL"},
-    {id: "0009", name: "Red Dalia", country: "Mexico", region: "Chiapas" , producer: "Finca Monte Azul", roastProfile: "Medium Dark", flavorNotes: ["Caramel", "Sweet", "Tropical Fruit", "Dried Fruit"], process: "Washed", variety: "Caturra, Typica", elevation:"1250 MASL"},
-    {id: "0010", name: "Finca El Bosque", country: "Nicaragua", region: "Nueva Segovia" , producer: "Julio Peralta", roastProfile: "Light", flavorNotes: ["Banana", "Berry", "Chocolate", "Caramel"], process: "Natural Anerobic Fermentation", variety: "Yellow Catuai", elevation:"1350 MASL"},
-    {id: "0011", name: "Finca Santa Maria de Lourdes", country: "Nicaragua", region: "Nueva Segovia" , producer: "Octavio Peralta", roastProfile: "Light", flavorNotes: ["Apple", "Floral", "Chocolate", "Tropical Fruit"], process: "Natural Anerobic Fermentation", variety: "Caturra, Typica, Bourbon", elevation:"1050 MASL"},
-    {id: "0012", name: "Finca Borbollon", country: "Nicaragua", region: "Esteli" , producer: "Norman Canales", roastProfile: "Medium Light", flavorNotes: ["Floral", "Chocolate", "Citrus", "Sweet"], process: "Washed", variety: "Caturra, Typica, Bourbon", elevation:"1350 MASL"},
-    {id: "0013", name: "Kerinci Highlands", country: "Sumatra", region: "Mount Kerinci Highlands" , producer: "Various Smallholders", roastProfile: "Dark", flavorNotes: ["Herbal", "Floral", "Citrus", "Tropical Fruit"], process: "Honey", variety: "Andung Sari, Tim-Tim, Bor-Bor", elevation:"1300 MASL"},
-    {id: "0014", name: "Gayo Highlands", country: "Sumatra", region: "Central Aceh Regency" , producer: "Various Smallholders", roastProfile: "Medium Dark", flavorNotes: ["Herbal", "Tropical Fruit", "Orange", "Floral"], process: "Wet-Hulled", variety: "Ateng P88, Tim-Tim", elevation:"1450 MASL"},
+    {id: "0001", name: "Finca La Fazenda Farms", country: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roastProfile: "Medium", flavorNotes: ["Dried Fruit", "Sweet", "Floral", "Citrus"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL", buttons: ["button-coffee-more-info-front-01","button-coffee-more-info-back-01"], tileFront:true},
+    {id: "0002", name: "Sitio Baixado", country: "Brazil", region: "Cristina" , producer: "Helisson Afonso Da Silva", roastProfile: "Medium Dark", flavorNotes: ["Caramel","Chocolate","Tropical Fruit", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1300 MASL", buttons: ["button-coffee-more-info-front-02","button-coffee-more-info-back-02"], tileFront:true},
+    {id: "0003", name: "El Alirio", country: "Colombia", region: "Huila" , producer: "John Fredy Chaguala", roastProfile: "Medium Light", flavorNotes: ["Banana", "Citrus", "Orange", "Tropical Fruit"], process: "Honey", variety: "Pink Bourbon", elevation:"1620 MASL", buttons: ["button-coffee-more-info-front-03","button-coffee-more-info-back-03"], tileFront:true},
+    {id: "0004", name: "Santa Isabel", country: "Colombia", region: "Antioquia" , producer: "Don Fernando Echavarria", roastProfile: "Light", flavorNotes: ["Banana", "Grape", "Sweet", "White Wine"], process: "Pulped Natural", variety: "Castillo", elevation:"1850 MASL", buttons: ["button-coffee-more-info-front-04","button-coffee-more-info-back-04"], tileFront:true},
+    {id: "0005", name: "Guji Hambela", country: "Ethiopia", region: "Oromia" , producer: "Various Smallholders", roastProfile: "Medium Light", flavorNotes: ["Stone Fruit", "Berry", "Nut", "Chocolate"], process: "Pulped Natural", variety: "Heirloom", elevation:"1650 MASL", buttons: ["button-coffee-more-info-front-05","button-coffee-more-info-back-05"], tileFront:true},
+    {id: "0006", name: "Finca Pojoptetac", country: "Guatemala", region: "Huehuetenango" , producer: "Walter Francisco Garcia", roastProfile: "Medium", flavorNotes: ["Nut", "Berry","Honey","Malty"], process: "Washed", variety: "Bourbon, Caturra, Pache", elevation:"1600 MASL", buttons: ["button-coffee-more-info-front-06","button-coffee-more-info-back-06"], tileFront:true},
+    {id: "0007", name: "Finca San Jose del Lago", country: "Guatemala", region: "Lake Atitlan" , producer: "Eduardo Cabera", roastProfile: "Medium", flavorNotes: ["Nut", "Sweet", "Chocolate", "Orange"], process: "Washed", variety: "Caturra, Typica, Bourbon", elevation:"1820 MASL", buttons: ["button-coffee-more-info-front-07","button-coffee-more-info-back-07"], tileFront:true},
+    {id: "0008", name: "Las Guacamayas", country: "Guatemala", region: "Jutiapa" , producer: "Amilcar Romero", roastProfile: "Dark", flavorNotes: ["Chocolate", "Tropical Fruit", "Berry", "Grape"], process: "Natural Anerobic Fermentation", variety: "Orange Bourbon", elevation:"1650 MASL", buttons: ["button-coffee-more-info-front-08","button-coffee-more-info-back-08"], tileFront:true},
+    {id: "0009", name: "Red Dalia", country: "Mexico", region: "Chiapas" , producer: "Finca Monte Azul", roastProfile: "Medium Dark", flavorNotes: ["Caramel", "Sweet", "Tropical Fruit", "Dried Fruit"], process: "Washed", variety: "Caturra, Typica", elevation:"1250 MASL", buttons: ["button-coffee-more-info-front-09","button-coffee-more-info-back-09"], tileFront:true},
+    {id: "0010", name: "Finca El Bosque", country: "Nicaragua", region: "Nueva Segovia" , producer: "Julio Peralta", roastProfile: "Light", flavorNotes: ["Banana", "Berry", "Chocolate", "Caramel"], process: "Natural Anerobic Fermentation", variety: "Yellow Catuai", elevation:"1350 MASL", buttons: ["button-coffee-more-info-front-10","button-coffee-more-info-back-10"], tileFront:true},
+    {id: "0011", name: "Finca Santa Maria de Lourdes", country: "Nicaragua", region: "Nueva Segovia" , producer: "Octavio Peralta", roastProfile: "Light", flavorNotes: ["Apple", "Floral", "Chocolate", "Tropical Fruit"], process: "Natural Anerobic Fermentation", variety: "Caturra, Typica, Bourbon", elevation:"1050 MASL", buttons: ["button-coffee-more-info-front-11","button-coffee-more-info-back-11"], tileFront:true},
+    {id: "0012", name: "Finca Borbollon", country: "Nicaragua", region: "Esteli" , producer: "Norman Canales", roastProfile: "Medium Light", flavorNotes: ["Floral", "Chocolate", "Citrus", "Sweet"], process: "Washed", variety: "Caturra, Typica, Bourbon", elevation:"1350 MASL", buttons: ["button-coffee-more-info-front-12","button-coffee-more-info-back-12"], tileFront:true},
+    {id: "0013", name: "Kerinci Highlands", country: "Sumatra", region: "Mount Kerinci Highlands" , producer: "Various Smallholders", roastProfile: "Dark", flavorNotes: ["Herbal", "Floral", "Citrus", "Tropical Fruit"], process: "Honey", variety: "Andung Sari, Tim-Tim, Bor-Bor", elevation:"1300 MASL", buttons: ["button-coffee-more-info-front-13","button-coffee-more-info-back-13"], tileFront:true},
+    {id: "0014", name: "Gayo Highlands", country: "Sumatra", region: "Central Aceh Regency" , producer: "Various Smallholders", roastProfile: "Medium Dark", flavorNotes: ["Herbal", "Tropical Fruit", "Orange", "Floral"], process: "Wet-Hulled", variety: "Ateng P88, Tim-Tim", elevation:"1450 MASL", buttons: ["button-coffee-more-info-front-14","button-coffee-more-info-back-14"], tileFront:true},
 ];
 let nextCoffeeId = "";
 let flavorNotes = [];
 let countries = [];
 let filteredCoffees = [];
-//let infoButtons = [];
+let infoButtons = [];
+let frontSideTiles = [];
+let backSideTiles = [];
 let frontSideOfTile = true;
 let coffeeTiles = document.querySelector('#tile-collection');
 let searchedCoffee = document.querySelector('#input-search')

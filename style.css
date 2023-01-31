@@ -167,16 +167,16 @@ COFFEE TILES CONSTRUCTION AND STYLING
     /*outline: .25rem solid var(--color-accent);*/
 }
 #button-reset,
-#button-coffee-more-info-back,
-#button-coffee-more-info-front {
+.button-coffee-more-info-back,
+.button-coffee-more-info-front {
     background: var(--color-primary-light);
     color: var(--color-primary-dark);
 }
-#button-coffee-more-info-front{
+.button-coffee-more-info-front{
     width: 100%;
     grid-row: 5;
 }
-#button-coffee-more-info-back{
+.button-coffee-more-info-back{
     width: 100%;
     grid-column: 1/2;
     grid-row: 2;
@@ -184,8 +184,8 @@ COFFEE TILES CONSTRUCTION AND STYLING
     color: var(--color-primary-dark);
 }
 #button-reset:hover,
-#button-coffee-more-info-front:hover,
-#button-coffee-more-info-back:hover {
+.button-coffee-more-info-front:hover,
+.button-coffee-more-info-back:hover {
     color: var(--color-white);
     outline: .1rem solid var(--color-accent);
 }
