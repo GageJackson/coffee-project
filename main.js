@@ -75,23 +75,18 @@ function composeCoffeeTileBackHtml(coffee, number){
 }
 
 function capitalizeStrings(oldString){
-    console.log(oldString);
     let newString = "";
     let newStringArray = [];
     let oldStringArray = [];
     if (oldString.length <= 1){
-        console.log("no input");
         return "No Input";
     } else {
         oldStringArray = oldString.split(" ");
-        console.log("old" + oldStringArray);
         oldStringArray.forEach(function (word){
-            console.log(word);
-            let fixedString = word[0].toUpperCase() + word.substring(1);
+            let fixedString = word[0].toUpperCase() + word.substring(1).toLowerCase();
             newStringArray.push(fixedString);
         })
         newString = newStringArray.join(" ");
-        console.log(newString);
         return newString;
     }
 }
@@ -196,11 +191,13 @@ function addNewCoffee(){
 
 
     newCoffeeFlavorsString = newCoffeeFlavorsString.replaceAll(" ", "");
-    let newCoffeeFlavors = newCoffeeFlavorsString.split(",");
+    let newCoffeeFlavorsSplitString = newCoffeeFlavorsString.split(",");
+    let newCoffeeFlavors = [];
 
-    newCoffeeFlavors.forEach(function(flavor){
-        flavor = flavor[0].toUpperCase() + flavor.substring(1);
-        newCoffeeFlavors.push(flavor);
+    newCoffeeFlavorsSplitString.forEach(function(flavor){
+        let capitalizedFlavor = "";
+        capitalizedFlavor = capitalizeStrings(flavor);
+        newCoffeeFlavors.push(capitalizedFlavor);
     })
 
     newCoffee.id = updateNextCoffeeId();
@@ -230,7 +227,7 @@ function sortCoffeeTiles(){
     let selectedCountry = countrySelection.value;
     let selectedFlavor = flavorSelection.value;
     coffeeOfferings.forEach(function(coffee) {
-        if ((coffee.roastProfile === selectedRoast || selectedRoast === "Roast Profile") && (coffee.country === selectedCountry || selectedCountry === "Origin") && (coffee.flavorNotes.includes(selectedFlavor) || selectedFlavor === "Flavor Note")) {
+        if ((coffee.roastProfile.toLowerCase() === selectedRoast.toLowerCase() || selectedRoast === "Roast Profile") && (coffee.country.toLowerCase() === selectedCountry.toLowerCase() || selectedCountry === "Origin") && (coffee.flavorNotes.includes(selectedFlavor) || selectedFlavor === "Flavor Note")) {
             if(!filteredCoffees.includes(coffee)){
                 filteredCoffees.push(coffee);
             }
@@ -286,7 +283,7 @@ function updateFlavorNotes(){
     coffeeOfferings.forEach(function(coffee){
         for (let i = 0; i < coffee.flavorNotes.length; i++){
             if(!flavorNotes.includes(coffee.flavorNotes[i])){
-                flavorNotes.push(coffee.flavorNotes[i][0].toUpperCase() + coffee.flavorNotes[i].substring(1));
+                flavorNotes.push(capitalizeStrings(coffee.flavorNotes[i]));
             }
         }
     })
@@ -303,7 +300,6 @@ function updateCountries(){
 function updateNextCoffeeId(){
     nextCoffeeId = "";
     nextCoffeeId += (parseInt(coffeeOfferings[coffeeOfferings.length-1].id) + 1);
-    console.log(nextCoffeeId);
     switch(nextCoffeeId.length){
         case 1:
             return nextCoffeeId = "000" + nextCoffeeId;
