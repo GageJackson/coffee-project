@@ -27,22 +27,22 @@ function composeCoffeeTileFrontHtml(coffee, number) {
     let html = '<div class="coffee-tile-front coffee-tile">'
     html += '<section class="coffee-tile-head">'
     html += '<p class="coffee-label-head">' + coffee.id + '</p>';
-    html += '<p class="coffee-name">' + coffee.name + '</p>';
-    html += '<p class="coffee-label-head">' + coffee.country + '</p>';html += '</ul>'
+    html += '<p class="coffee-name">' + capitalizeStrings(coffee.name) + '</p>';
+    html += '<p class="coffee-label-head">' + capitalizeStrings(coffee.country) + '</p>';html += '</ul>'
     html += '</section>'
 
     html += '<section class="coffee-tile-body">'
     html += '<div>';
     html += '<p class="coffee-label-body"> ROAST PROFILE </p>';
-    html += '<p class="coffee-properties-body">' + coffee.roastProfile + '</p>';
+    html += '<p class="coffee-properties-body">' + capitalizeStrings(coffee.roastProfile) + '</p>';
     html += '</div>'
     html += '<div>';
     html += '<p class="coffee-label-body"> FLAVOR NOTES </p>';
     html += '<ul>'
-    html += '<li class="coffee-properties-body">' + coffee.flavorNotes[0] + '</li>';
-    html += '<li class="coffee-properties-body">' + coffee.flavorNotes[1] + '</li>';
-    html += '<li class="coffee-properties-body">' + coffee.flavorNotes[2] + '</li>';
-    html += '<li class="coffee-properties-body">' + coffee.flavorNotes[3] + '</li>';
+    html += '<li class="coffee-properties-body">' + capitalizeStrings(coffee.flavorNotes[0]) + '</li>';
+    html += '<li class="coffee-properties-body">' + capitalizeStrings(coffee.flavorNotes[1]) + '</li>';
+    html += '<li class="coffee-properties-body">' + capitalizeStrings(coffee.flavorNotes[2]) + '</li>';
+    html += '<li class="coffee-properties-body">' + capitalizeStrings(coffee.flavorNotes[3]) + '</li>';
     html += '</ul>';
     html += '</div>';
     html += '<button id="button-coffee-more-info-front">More Info</button>';
@@ -57,15 +57,15 @@ function composeCoffeeTileBackHtml(coffee, number){
     let html = '<div class="coffee-tile-back coffee-tile">';
     html += '<section class="coffee-tile-back-info">'
     html += '<p class="coffee-label-body"> REGION </p>';
-    html += '<p class="coffee-properties-body">' + coffee.region + '</p>';
+    html += '<p class="coffee-properties-body">' + capitalizeStrings(coffee.region) + '</p>';
     html += '<p class="coffee-label-body"> PRODUCER </p>';
-    html += '<p class="coffee-properties-body">' + coffee.producer + '</p>';
+    html += '<p class="coffee-properties-body">' + capitalizeStrings(coffee.producer) + '</p>';
     html += '<p class="coffee-label-body"> PROCESS </p>';
-    html += '<p class="coffee-properties-body">' + coffee.process + '</p>';
+    html += '<p class="coffee-properties-body">' + capitalizeStrings(coffee.process) + '</p>';
     html += '<p class="coffee-label-body"> VARIETAL </p>';
-    html += '<p class="coffee-properties-body">' + coffee.variety + '</p>';
+    html += '<p class="coffee-properties-body">' + capitalizeStrings(coffee.variety) + '</p>';
     html += '<p class="coffee-label-body"> ELEVATION </p>';
-    html += '<p class="coffee-properties-body">' + coffee.elevation + '</p>';
+    html += '<p class="coffee-properties-body">' + capitalizeStrings(coffee.elevation) + '</p>';
     html += '</section>'
     html += '<button id="button-coffee-more-info-back">Other Side</button>';
     //html += '<button id="button-coffee-more-info-back' + number + '">Other Side</button>';
@@ -74,6 +74,27 @@ function composeCoffeeTileBackHtml(coffee, number){
     return html;
 }
 
+function capitalizeStrings(oldString){
+    console.log(oldString);
+    let newString = "";
+    let newStringArray = [];
+    let oldStringArray = [];
+    if (oldString.length <= 1){
+        console.log("no input");
+        return "No Input";
+    } else {
+        oldStringArray = oldString.split(" ");
+        console.log("old" + oldStringArray);
+        oldStringArray.forEach(function (word){
+            console.log(word);
+            let fixedString = word[0].toUpperCase() + word.substring(1);
+            newStringArray.push(fixedString);
+        })
+        newString = newStringArray.join(" ");
+        console.log(newString);
+        return newString;
+    }
+}
 /*
 //////////////////////////////////////////////////////////////////////////////////////
 This section Composes Selector Html
@@ -89,6 +110,7 @@ function initializeSelectors(){
 
 function createSelectorHtml(selectorArray, selectorHTML, selectedSelector, sortSelectorArray){
     if(sortSelectorArray){
+        selectorArray = selectorArray.filter((item, index)=>selectorArray.indexOf(item)===index);
         selectorArray.sort();
     }
     selectorHTML.innerHTML = '';
@@ -175,6 +197,11 @@ function addNewCoffee(){
 
     newCoffeeFlavorsString = newCoffeeFlavorsString.replaceAll(" ", "");
     let newCoffeeFlavors = newCoffeeFlavorsString.split(",");
+
+    newCoffeeFlavors.forEach(function(flavor){
+        flavor = flavor[0].toUpperCase() + flavor.substring(1);
+        newCoffeeFlavors.push(flavor);
+    })
 
     newCoffee.id = updateNextCoffeeId();
     newCoffee.name = newCoffeeName;
