@@ -45,9 +45,11 @@ function composeCoffeeTileFrontHtml(coffee, number) {
     html += '<li class="coffee-properties-body">' + coffee.flavorNotes[3] + '</li>';
     html += '</ul>';
     html += '</div>';
-    html += '<button id="button-coffee-more-info">More Info</button>';
-    //console.log('<button id="button-coffee-more-info' + number + '">More Info</button>');
+    html += '<button id="button-coffee-more-info-front">More Info</button>';
+    //html += '<button id="button-coffee-more-info-front' + number + '">Other Side</button>';
+    //console.log("Front Test" + '<button id="button-coffee-more-info-front' + number + '">Other Side</button>');
     html += '</section>';
+
     html += '</div>';
     return html;
 }
@@ -66,7 +68,8 @@ function composeCoffeeTileBackHtml(coffee, number){
     html += '<p class="coffee-properties-body">' + coffee.elevation + '</p>';
     html += '</section>'
     html += '<button id="button-coffee-more-info-back">Other Side</button>';
-    //console.log('<button id="button-coffee-more-info"' + number + '>Other Side</button>');
+    //html += '<button id="button-coffee-more-info-back' + number + '">Other Side</button>';
+    //console.log("Back Test" + '<button id="button-coffee-more-info' + number + '">Other Side</button>');
     html += '</div>';
     return html;
 }
@@ -287,7 +290,7 @@ function updateNextCoffeeId(){
 }
 function  updateInfoButtons(){
     if (frontSideOfTile){
-        let infoButtons = document.querySelectorAll('#button-coffee-more-info')
+        let infoButtons = document.querySelectorAll('#button-coffee-more-info-front')
         for (let i = 0; i < infoButtons.length; i++){
             infoButtons[i].addEventListener("click",flipCoffeeTile);
         }
@@ -299,6 +302,31 @@ function  updateInfoButtons(){
     }
 }
 
+function updateInfoButtons2(){
+    console.log("called");
+    console.log(nextCoffeeId);
+    for(let i = 0; i < parseInt(nextCoffeeId) - 1; i++){
+        if(frontSideOfTile){
+            console.log("front")
+            infoButtons.push("button-coffee-more-info-front" + i);
+        } else {
+            console.log("back")
+            infoButtons.push("button-coffee-more-info-back" + i);
+        }
+    }
+    infoButtons.forEach(function (button){
+        console.log(typeof button);
+        let newButton = document.querySelector('#' + button);
+        //button.addEventListener("click",flipCoffeeTile)
+        newButton.addEventListener("click",flipCoffeeTile);
+    })
+}
+
+/*
+//////////////////////////////////////////////////////////////////////////////////////
+This section holds all of my variables
+//////////////////////////////////////////////////////////////////////////////////////
+ */
 let coffeeOfferings = [
     {id: "0001", name: "Finca La Fazenda Farms", country: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roastProfile: "Medium", flavorNotes: ["Dried Fruit", "Sweet", "Floral", "Citrus"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL"},
     {id: "0002", name: "Sitio Baixado", country: "Brazil", region: "Cristina" , producer: "Helisson Afonso Da Silva", roastProfile: "Medium Dark", flavorNotes: ["Caramel","Chocolate","Tropical Fruit", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1300 MASL"},
@@ -319,6 +347,7 @@ let nextCoffeeId = "";
 let flavorNotes = [];
 let countries = [];
 let filteredCoffees = [];
+//let infoButtons = [];
 let frontSideOfTile = true;
 let coffeeTiles = document.querySelector('#tile-collection');
 let searchedCoffee = document.querySelector('#input-search')
@@ -379,3 +408,5 @@ searchButton.addEventListener('click', searchCoffeeTiles);
 addCoffeeButton.addEventListener('click', addNewCoffee);
 
 updateTiles();
+updateNextCoffeeId();
+updateInfoButtons()

@@ -143,7 +143,7 @@ COFFEE TILES CONSTRUCTION AND STYLING
     transform: scale(1.1);
     outline: .25rem solid var(--color-accent);
 }
-#button-coffee-more-info{
+#button-coffee-more-info-front{
     width: 100%;
     grid-row: 5;
     background: var(--color-primary-light);
