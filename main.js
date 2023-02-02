@@ -6,7 +6,8 @@ This section Composes the Coffee Tile Html for the Front and Back Side of the Co
 function composeCoffeeTileCollectionHtml(coffees) {
     let html = '';
     for(let i = coffees.length- 1 ; i >= 0; i--) {
-        if(coffees.tileFront){
+        //console.log(coffees[i]);
+        if(coffees[i].tileFront){
             html += composeCoffeeTileFrontHtml(coffees[i]);
         } else {
             html += composeCoffeeTileBackHtml(coffees[i]);
@@ -17,6 +18,13 @@ function composeCoffeeTileCollectionHtml(coffees) {
 function flipCoffeeTile(e){
     console.log("click");
     console.log(e.target.id);
+    coffeeOfferings.forEach(function(coffee){
+        if(coffee.buttons[0]===e.target.id){
+            coffee.tileFront = false;
+        }else{
+            coffee.tileFront = true;
+        }
+    })
     if(frontSideOfTile === true){
         frontSideOfTile = false;
     } else {
@@ -24,21 +32,6 @@ function flipCoffeeTile(e){
     }
     updateCoffeeTilesInnerHtml();
     updateInfoButtons();
-}
-function flipCoffeeTile2(e){
-    //button-coffee-more-info-front-0004
-    let clickedButton = e.target.id;
-    if (frontSideTiles.includes(clickedButton)){
-        frontSideTiles.remove(clickedButton);
-        backSideTiles.push(clickedButton);
-    } else if(backSideTiles.includes(clickedButton)) {
-        backSideTiles.remove(clickedButton);
-        frontSideTiles.push(clickedButton);
-    }
-}
-
-function initializeTilesToFront(){
-
 }
 
 function composeCoffeeTileFrontHtml(coffee) {
@@ -63,9 +56,8 @@ function composeCoffeeTileFrontHtml(coffee) {
     html += '<li class="coffee-properties-body">' + capitalizeStrings(coffee.flavorNotes[3]) + '</li>';
     html += '</ul>';
     html += '</div>';
-    //html += '<button id="button-coffee-more-info-front">More Info</button>';
     html += '<button id=' + coffee.buttons[0] + ' class="button-coffee-more-info-front">More Info</button>';
-    //console.log("Front Test" + '<button id="button-coffee-more-info-front' + number + '">Other Side</button>');
+    //console.log("Front Test" + '<button id=' + coffee.buttons[0] + ' class="button-coffee-more-info-front">More Info</button>');
     html += '</section>';
 
     html += '</div>';
@@ -85,10 +77,8 @@ function composeCoffeeTileBackHtml(coffee){
     html += '<p class="coffee-label-body"> ELEVATION </p>';
     html += '<p class="coffee-properties-body">' + capitalizeStrings(coffee.elevation) + '</p>';
     html += '</section>'
-    html += '<button id=' + coffee.buttons[1] + ' class="button-coffee-more-info-back">More Info</button>';
-    //html += '<button id="button-coffee-more-info-back">Other Side</button>';
-    //html += '<button id="button-coffee-more-info-back' + number + '" class="button-coffee-more-info-front">Other Side</button>';
-    //console.log("Back Test" + '<button id="button-coffee-more-info' + number + '">Other Side</button>');
+    html += '<button id=' + coffee.buttons[1] + ' class="button-coffee-more-info-back">Other Side</button>';
+    //console.log("Back Test" + '<button id=' + coffee.buttons[1] + ' class="button-coffee-more-info-back">More Info</button>');
     html += '</div>';
     return html;
 }
@@ -331,7 +321,7 @@ function updateNextCoffeeId(){
             return nextCoffeeId = "" + nextCoffeeId;
     }
 }
-
+/*
 function updateInfoButtons(){
     infoButtons = [];
     //console.log("filtered: " + filteredCoffees);
@@ -352,6 +342,33 @@ function updateInfoButtons(){
     })
     backSideTiles.forEach(function (button){
         let newButton = document.querySelector('#' + button);
+        newButton.addEventListener("click",flipCoffeeTile);
+    })
+}
+*/
+function updateInfoButtons(){
+    //console.log("called");
+    //console.log(nextCoffeeId);
+    infoButtons = [];
+    //console.log("filtered: " + filteredCoffees);
+    filteredCoffees.forEach(function (coffee){
+        //console.log(coffee.tileFront);
+        if(coffee.tileFront){
+            infoButtons.push(coffee.buttons[0]);
+            //console.log("front: " + infoButtons);
+        } else {
+            infoButtons.push(coffee.buttons[1]);
+            //console.log("back: " + infoButtons);
+        }
+    })
+    // frontSideOfTile
+    //console.log("after: " + infoButtons);
+
+    infoButtons.forEach(function (button){
+        //console.log(button);
+        let newButton = document.querySelector('#' + button);
+        //button.addEventListener("click",flipCoffeeTile)
+        //console.log("huh?");
         newButton.addEventListener("click",flipCoffeeTile);
     })
 }
