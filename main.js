@@ -219,6 +219,7 @@ function addNewCoffee(){
     newCoffee.buttons[1] = "button-coffee-more-info-back-" + nextId;
 
     coffeeOfferings.push(newCoffee);
+    window.localStorage.setItem("coffeeOfferings", JSON.stringify(coffeeOfferings));
     clearAddCoffeeFields();
     updateTiles();
 }
@@ -418,6 +419,14 @@ submitButton.addEventListener('click', sortCoffeeTiles);
 resetButton.addEventListener('click', clearBrowseCoffeeFields);
 searchButton.addEventListener('click', searchCoffeeTiles);
 addCoffeeButton.addEventListener('click', addNewCoffee);
+
+
+const retrievedData = JSON.parse(window.localStorage.getItem("coffeeOfferings"));
+if(retrievedData){
+    coffeeOfferings = retrievedData;
+}
+console.log(retrievedData);
+
 
 updateTiles();
 updateNextCoffeeId();
