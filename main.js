@@ -6,7 +6,6 @@ This section Composes the Coffee Tile Html for the Front and Back Side of the Co
 function composeCoffeeTileCollectionHtml(coffees) {
     let html = '';
     for(let i = coffees.length- 1 ; i >= 0; i--) {
-        //console.log(coffees[i]);
         if(coffees[i].tileFront){
             html += composeCoffeeTileFrontHtml(coffees[i]);
         } else {
@@ -16,20 +15,14 @@ function composeCoffeeTileCollectionHtml(coffees) {
     return html;
 }
 function flipCoffeeTile(e){
-    console.log("click");
-    console.log(e.target.id);
-    coffeeOfferings.forEach(function(coffee){
+    //console.log(e.target.id);
+    filteredCoffees.forEach(function(coffee){
         if(coffee.buttons[0]===e.target.id){
             coffee.tileFront = false;
         }else{
             coffee.tileFront = true;
         }
     })
-    if(frontSideOfTile === true){
-        frontSideOfTile = false;
-    } else {
-        frontSideOfTile = true;
-    }
     updateCoffeeTilesInnerHtml();
     updateInfoButtons();
 }
@@ -57,7 +50,6 @@ function composeCoffeeTileFrontHtml(coffee) {
     html += '</ul>';
     html += '</div>';
     html += '<button id=' + coffee.buttons[0] + ' class="button-coffee-more-info-front">More Info</button>';
-    //console.log("Front Test" + '<button id=' + coffee.buttons[0] + ' class="button-coffee-more-info-front">More Info</button>');
     html += '</section>';
 
     html += '</div>';
@@ -78,7 +70,6 @@ function composeCoffeeTileBackHtml(coffee){
     html += '<p class="coffee-properties-body">' + capitalizeStrings(coffee.elevation) + '</p>';
     html += '</section>'
     html += '<button id=' + coffee.buttons[1] + ' class="button-coffee-more-info-back">Other Side</button>';
-    //console.log("Back Test" + '<button id=' + coffee.buttons[1] + ' class="button-coffee-more-info-back">More Info</button>');
     html += '</div>';
     return html;
 }
@@ -138,6 +129,7 @@ function searchCoffeeTiles(){
         let userSearchInput = searchedCoffee.value.toLowerCase().split(" ");
         for(let i = 1; i < numberOfCoffeeProperties; i++){
             let databaseSearchComparison = cycleThroughCoffeeProperties(coffee, i);
+            console.log(databaseSearchComparison);
             let userSearchMatches = databaseSearchComparison.filter(function (obj){
                 return userSearchInput.indexOf(obj) !== -1;
             })
@@ -177,6 +169,11 @@ function cycleThroughCoffeeProperties(coffee, number){
                 lowercaseArray.push(coffee.flavorNotes[i].toLowerCase());
             }
             return lowercaseArray;
+        case 11:
+            return coffee.id.toLowerCase().split(" ");
+        case 12:
+            return coffee.id.toLowerCase().split(" ");
+        default:
     }
 }
 
@@ -186,7 +183,7 @@ This section adds a new coffee object to the coffee offering array using search 
 //////////////////////////////////////////////////////////////////////////////////////
  */
 function addNewCoffee(){
-    let newCoffee ={id:"", name:"", country:"", roastProfile:"", flavorNotes:[]};
+    let newCoffee ={id:"", name:"", country:"", roastProfile:"", flavorNotes:[], variety:"", elevation: "", process:"", buttons: [], tileFront: true};
 
     let newCoffeeName = document.getElementById("input-add-coffee").value;
     let newCoffeeProducer = document.getElementById("input-add-coffee-producer").value;
@@ -198,8 +195,6 @@ function addNewCoffee(){
     let newCoffeeAltitude = document.getElementById("input-add-coffee-altitude").value;
     let newCoffeeProcessingMethod = document.getElementById("input-add-coffee-processing-method").value;
 
-
-
     newCoffeeFlavorsString = newCoffeeFlavorsString.replaceAll(" ", "");
     let newCoffeeFlavorsSplitString = newCoffeeFlavorsString.split(",");
     let newCoffeeFlavors = [];
@@ -209,8 +204,8 @@ function addNewCoffee(){
         capitalizedFlavor = capitalizeStrings(flavor);
         newCoffeeFlavors.push(capitalizedFlavor);
     })
-
-    newCoffee.id = updateNextCoffeeId();
+    let nextId = updateNextCoffeeId()
+    newCoffee.id = nextId;
     newCoffee.name = newCoffeeName;
     newCoffee.producer = newCoffeeProducer
     newCoffee.country = newCoffeeCountry;
@@ -220,6 +215,8 @@ function addNewCoffee(){
     newCoffee.variety = newCoffeeVarietal;
     newCoffee.elevation = newCoffeeAltitude;
     newCoffee.process = newCoffeeProcessingMethod;
+    newCoffee.buttons[0] = "button-coffee-more-info-front-" + nextId;
+    newCoffee.buttons[1] = "button-coffee-more-info-back-" + nextId;
 
     coffeeOfferings.push(newCoffee);
     clearAddCoffeeFields();
@@ -286,7 +283,6 @@ function updateTiles(){
     sortCoffeeTiles();
 }
 function updateCoffeeTilesInnerHtml(){
-    //TODO: composeCoffeeTileCollectionHtml(filteredCoffees,frontSideOfTile);
     coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees);
 }
 function updateFlavorNotes(){
@@ -308,7 +304,7 @@ function updateCountries(){
     countries.sort();
 }
 function updateNextCoffeeId(){
-    nextCoffeeId = "";
+    let nextCoffeeId = "";
     nextCoffeeId += (parseInt(coffeeOfferings[coffeeOfferings.length-1].id) + 1);
     switch(nextCoffeeId.length){
         case 1:
@@ -321,38 +317,11 @@ function updateNextCoffeeId(){
             return nextCoffeeId = "" + nextCoffeeId;
     }
 }
-/*
-function updateInfoButtons(){
-    infoButtons = [];
-    //console.log("filtered: " + filteredCoffees);
-        filteredCoffees.forEach(function (coffee){
-            //console.log(coffee.tileFront);
-            if(coffee.tileFront){
-                frontSideTiles.push(coffee.buttons[0]);
-                //console.log("front: " + infoButtons);
-            } else {
-                backSideTiles.push(coffee.buttons[1]);
-                //console.log("back: " + infoButtons);
-            }
-        })
 
-    frontSideTiles.forEach(function (button){
-        let newButton = document.querySelector('#' + button);
-        newButton.addEventListener("click",flipCoffeeTile);
-    })
-    backSideTiles.forEach(function (button){
-        let newButton = document.querySelector('#' + button);
-        newButton.addEventListener("click",flipCoffeeTile);
-    })
-}
-*/
 function updateInfoButtons(){
-    //console.log("called");
-    //console.log(nextCoffeeId);
     infoButtons = [];
     //console.log("filtered: " + filteredCoffees);
     filteredCoffees.forEach(function (coffee){
-        //console.log(coffee.tileFront);
         if(coffee.tileFront){
             infoButtons.push(coffee.buttons[0]);
             //console.log("front: " + infoButtons);
@@ -361,14 +330,9 @@ function updateInfoButtons(){
             //console.log("back: " + infoButtons);
         }
     })
-    // frontSideOfTile
-    //console.log("after: " + infoButtons);
 
     infoButtons.forEach(function (button){
-        //console.log(button);
         let newButton = document.querySelector('#' + button);
-        //button.addEventListener("click",flipCoffeeTile)
-        //console.log("huh?");
         newButton.addEventListener("click",flipCoffeeTile);
     })
 }
@@ -393,14 +357,10 @@ let coffeeOfferings = [
     {id: "0013", name: "Kerinci Highlands", country: "Sumatra", region: "Mount Kerinci Highlands" , producer: "Various Smallholders", roastProfile: "Dark", flavorNotes: ["Herbal", "Floral", "Citrus", "Tropical Fruit"], process: "Honey", variety: "Andung Sari, Tim-Tim, Bor-Bor", elevation:"1300 MASL", buttons: ["button-coffee-more-info-front-0013","button-coffee-more-info-back-0013"], tileFront:true},
     {id: "0014", name: "Gayo Highlands", country: "Sumatra", region: "Central Aceh Regency" , producer: "Various Smallholders", roastProfile: "Medium Dark", flavorNotes: ["Herbal", "Tropical Fruit", "Orange", "Floral"], process: "Wet-Hulled", variety: "Ateng P88, Tim-Tim", elevation:"1450 MASL", buttons: ["button-coffee-more-info-front-0014","button-coffee-more-info-back-0014"], tileFront:true},
 ];
-let nextCoffeeId = "";
 let flavorNotes = [];
 let countries = [];
 let filteredCoffees = [];
 let infoButtons = [];
-let frontSideTiles = [];
-let backSideTiles = [];
-let frontSideOfTile = true;
 let coffeeTiles = document.querySelector('#tile-collection');
 let searchedCoffee = document.querySelector('#input-search')
 
