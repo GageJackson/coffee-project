@@ -3,10 +3,10 @@
 This section Composes the Coffee Tile Html for the Front and Back Side of the Coffee Tile
 //////////////////////////////////////////////////////////////////////////////////////
  */
-function composeCoffeeTileCollectionHtml(coffees, frontSideOfTile) {
+function composeCoffeeTileCollectionHtml(coffees) {
     let html = '';
     for(let i = coffees.length- 1 ; i >= 0; i--) {
-        if(frontSideOfTile){
+        if(coffees.tileFront){
             html += composeCoffeeTileFrontHtml(coffees[i]);
         } else {
             html += composeCoffeeTileBackHtml(coffees[i]);
@@ -26,7 +26,7 @@ function flipCoffeeTile(e){
     updateInfoButtons();
 }
 function flipCoffeeTile2(e){
-    //button-coffee-more-info-front-04
+    //button-coffee-more-info-front-0004
     let clickedButton = e.target.id;
     if (frontSideTiles.includes(clickedButton)){
         frontSideTiles.remove(clickedButton);
@@ -143,7 +143,7 @@ Coffee Offering Array and displays Coffee tiles with user-input
  */
 function searchCoffeeTiles(){
     filteredCoffees = []
-    let numberOfCoffeeProperties = 11;
+    let numberOfCoffeeProperties = 12;
     coffeeOfferings.forEach(function (coffee){
         let userSearchInput = searchedCoffee.value.toLowerCase().split(" ");
         for(let i = 1; i < numberOfCoffeeProperties; i++){
@@ -297,7 +297,7 @@ function updateTiles(){
 }
 function updateCoffeeTilesInnerHtml(){
     //TODO: composeCoffeeTileCollectionHtml(filteredCoffees,frontSideOfTile);
-    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees, frontSideOfTile);
+    coffeeTiles.innerHTML = composeCoffeeTileCollectionHtml(filteredCoffees);
 }
 function updateFlavorNotes(){
     coffeeOfferings.forEach(function(coffee){
@@ -333,24 +333,24 @@ function updateNextCoffeeId(){
 }
 
 function updateInfoButtons(){
-    //console.log("called");
-    //console.log(nextCoffeeId);
     infoButtons = [];
     //console.log("filtered: " + filteredCoffees);
         filteredCoffees.forEach(function (coffee){
             //console.log(coffee.tileFront);
             if(coffee.tileFront){
-                infoButtons.push(coffee.buttons[0]);
+                frontSideTiles.push(coffee.buttons[0]);
                 //console.log("front: " + infoButtons);
             } else {
-                infoButtons.push(coffee.buttons[1]);
+                backSideTiles.push(coffee.buttons[1]);
                 //console.log("back: " + infoButtons);
             }
         })
-     // frontSideOfTile
-    //console.log("after: " + infoButtons);
 
-    infoButtons.forEach(function (button){
+    frontSideTiles.forEach(function (button){
+        let newButton = document.querySelector('#' + button);
+        newButton.addEventListener("click",flipCoffeeTile);
+    })
+    backSideTiles.forEach(function (button){
         let newButton = document.querySelector('#' + button);
         newButton.addEventListener("click",flipCoffeeTile);
     })
@@ -361,20 +361,20 @@ This section holds all of my variables
 //////////////////////////////////////////////////////////////////////////////////////
  */
 let coffeeOfferings = [
-    {id: "0001", name: "Finca La Fazenda Farms", country: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roastProfile: "Medium", flavorNotes: ["Dried Fruit", "Sweet", "Floral", "Citrus"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL", buttons: ["button-coffee-more-info-front-01","button-coffee-more-info-back-01"], tileFront:true},
-    {id: "0002", name: "Sitio Baixado", country: "Brazil", region: "Cristina" , producer: "Helisson Afonso Da Silva", roastProfile: "Medium Dark", flavorNotes: ["Caramel","Chocolate","Tropical Fruit", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1300 MASL", buttons: ["button-coffee-more-info-front-02","button-coffee-more-info-back-02"], tileFront:true},
-    {id: "0003", name: "El Alirio", country: "Colombia", region: "Huila" , producer: "John Fredy Chaguala", roastProfile: "Medium Light", flavorNotes: ["Banana", "Citrus", "Orange", "Tropical Fruit"], process: "Honey", variety: "Pink Bourbon", elevation:"1620 MASL", buttons: ["button-coffee-more-info-front-03","button-coffee-more-info-back-03"], tileFront:true},
-    {id: "0004", name: "Santa Isabel", country: "Colombia", region: "Antioquia" , producer: "Don Fernando Echavarria", roastProfile: "Light", flavorNotes: ["Banana", "Grape", "Sweet", "White Wine"], process: "Pulped Natural", variety: "Castillo", elevation:"1850 MASL", buttons: ["button-coffee-more-info-front-04","button-coffee-more-info-back-04"], tileFront:true},
-    {id: "0005", name: "Guji Hambela", country: "Ethiopia", region: "Oromia" , producer: "Various Smallholders", roastProfile: "Medium Light", flavorNotes: ["Stone Fruit", "Berry", "Nut", "Chocolate"], process: "Pulped Natural", variety: "Heirloom", elevation:"1650 MASL", buttons: ["button-coffee-more-info-front-05","button-coffee-more-info-back-05"], tileFront:true},
-    {id: "0006", name: "Finca Pojoptetac", country: "Guatemala", region: "Huehuetenango" , producer: "Walter Francisco Garcia", roastProfile: "Medium", flavorNotes: ["Nut", "Berry","Honey","Malty"], process: "Washed", variety: "Bourbon, Caturra, Pache", elevation:"1600 MASL", buttons: ["button-coffee-more-info-front-06","button-coffee-more-info-back-06"], tileFront:true},
-    {id: "0007", name: "Finca San Jose del Lago", country: "Guatemala", region: "Lake Atitlan" , producer: "Eduardo Cabera", roastProfile: "Medium", flavorNotes: ["Nut", "Sweet", "Chocolate", "Orange"], process: "Washed", variety: "Caturra, Typica, Bourbon", elevation:"1820 MASL", buttons: ["button-coffee-more-info-front-07","button-coffee-more-info-back-07"], tileFront:true},
-    {id: "0008", name: "Las Guacamayas", country: "Guatemala", region: "Jutiapa" , producer: "Amilcar Romero", roastProfile: "Dark", flavorNotes: ["Chocolate", "Tropical Fruit", "Berry", "Grape"], process: "Natural Anerobic Fermentation", variety: "Orange Bourbon", elevation:"1650 MASL", buttons: ["button-coffee-more-info-front-08","button-coffee-more-info-back-08"], tileFront:true},
-    {id: "0009", name: "Red Dalia", country: "Mexico", region: "Chiapas" , producer: "Finca Monte Azul", roastProfile: "Medium Dark", flavorNotes: ["Caramel", "Sweet", "Tropical Fruit", "Dried Fruit"], process: "Washed", variety: "Caturra, Typica", elevation:"1250 MASL", buttons: ["button-coffee-more-info-front-09","button-coffee-more-info-back-09"], tileFront:true},
-    {id: "0010", name: "Finca El Bosque", country: "Nicaragua", region: "Nueva Segovia" , producer: "Julio Peralta", roastProfile: "Light", flavorNotes: ["Banana", "Berry", "Chocolate", "Caramel"], process: "Natural Anerobic Fermentation", variety: "Yellow Catuai", elevation:"1350 MASL", buttons: ["button-coffee-more-info-front-10","button-coffee-more-info-back-10"], tileFront:true},
-    {id: "0011", name: "Finca Santa Maria de Lourdes", country: "Nicaragua", region: "Nueva Segovia" , producer: "Octavio Peralta", roastProfile: "Light", flavorNotes: ["Apple", "Floral", "Chocolate", "Tropical Fruit"], process: "Natural Anerobic Fermentation", variety: "Caturra, Typica, Bourbon", elevation:"1050 MASL", buttons: ["button-coffee-more-info-front-11","button-coffee-more-info-back-11"], tileFront:true},
-    {id: "0012", name: "Finca Borbollon", country: "Nicaragua", region: "Esteli" , producer: "Norman Canales", roastProfile: "Medium Light", flavorNotes: ["Floral", "Chocolate", "Citrus", "Sweet"], process: "Washed", variety: "Caturra, Typica, Bourbon", elevation:"1350 MASL", buttons: ["button-coffee-more-info-front-12","button-coffee-more-info-back-12"], tileFront:true},
-    {id: "0013", name: "Kerinci Highlands", country: "Sumatra", region: "Mount Kerinci Highlands" , producer: "Various Smallholders", roastProfile: "Dark", flavorNotes: ["Herbal", "Floral", "Citrus", "Tropical Fruit"], process: "Honey", variety: "Andung Sari, Tim-Tim, Bor-Bor", elevation:"1300 MASL", buttons: ["button-coffee-more-info-front-13","button-coffee-more-info-back-13"], tileFront:true},
-    {id: "0014", name: "Gayo Highlands", country: "Sumatra", region: "Central Aceh Regency" , producer: "Various Smallholders", roastProfile: "Medium Dark", flavorNotes: ["Herbal", "Tropical Fruit", "Orange", "Floral"], process: "Wet-Hulled", variety: "Ateng P88, Tim-Tim", elevation:"1450 MASL", buttons: ["button-coffee-more-info-front-14","button-coffee-more-info-back-14"], tileFront:true},
+    {id: "0001", name: "Finca La Fazenda Farms", country: "Brazil", region: "Carmo de Minas" , producer: "Ibraim Chaib De Souza", roastProfile: "Medium", flavorNotes: ["Dried Fruit", "Sweet", "Floral", "Citrus"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1050 MASL", buttons: ["button-coffee-more-info-front-0001","button-coffee-more-info-back-0001"], tileFront:true},
+    {id: "0002", name: "Sitio Baixado", country: "Brazil", region: "Cristina" , producer: "Helisson Afonso Da Silva", roastProfile: "Medium Dark", flavorNotes: ["Caramel","Chocolate","Tropical Fruit", "Orange"], process: "Pulped Natural", variety: "Yellow Catuai", elevation:"1300 MASL", buttons: ["button-coffee-more-info-front-0002","button-coffee-more-info-back-0002"], tileFront:true},
+    {id: "0003", name: "El Alirio", country: "Colombia", region: "Huila" , producer: "John Fredy Chaguala", roastProfile: "Medium Light", flavorNotes: ["Banana", "Citrus", "Orange", "Tropical Fruit"], process: "Honey", variety: "Pink Bourbon", elevation:"1620 MASL", buttons: ["button-coffee-more-info-front-0003","button-coffee-more-info-back-0003"], tileFront:true},
+    {id: "0004", name: "Santa Isabel", country: "Colombia", region: "Antioquia" , producer: "Don Fernando Echavarria", roastProfile: "Light", flavorNotes: ["Banana", "Grape", "Sweet", "White Wine"], process: "Pulped Natural", variety: "Castillo", elevation:"1850 MASL", buttons: ["button-coffee-more-info-front-0004","button-coffee-more-info-back-0004"], tileFront:true},
+    {id: "0005", name: "Guji Hambela", country: "Ethiopia", region: "Oromia" , producer: "Various Smallholders", roastProfile: "Medium Light", flavorNotes: ["Stone Fruit", "Berry", "Nut", "Chocolate"], process: "Pulped Natural", variety: "Heirloom", elevation:"1650 MASL", buttons: ["button-coffee-more-info-front-0005","button-coffee-more-info-back-0005"], tileFront:true},
+    {id: "0006", name: "Finca Pojoptetac", country: "Guatemala", region: "Huehuetenango" , producer: "Walter Francisco Garcia", roastProfile: "Medium", flavorNotes: ["Nut", "Berry","Honey","Malty"], process: "Washed", variety: "Bourbon, Caturra, Pache", elevation:"1600 MASL", buttons: ["button-coffee-more-info-front-0006","button-coffee-more-info-back-0006"], tileFront:true},
+    {id: "0007", name: "Finca San Jose del Lago", country: "Guatemala", region: "Lake Atitlan" , producer: "Eduardo Cabera", roastProfile: "Medium", flavorNotes: ["Nut", "Sweet", "Chocolate", "Orange"], process: "Washed", variety: "Caturra, Typica, Bourbon", elevation:"1820 MASL", buttons: ["button-coffee-more-info-front-0007","button-coffee-more-info-back-0007"], tileFront:true},
+    {id: "0008", name: "Las Guacamayas", country: "Guatemala", region: "Jutiapa" , producer: "Amilcar Romero", roastProfile: "Dark", flavorNotes: ["Chocolate", "Tropical Fruit", "Berry", "Grape"], process: "Natural Anerobic Fermentation", variety: "Orange Bourbon", elevation:"1650 MASL", buttons: ["button-coffee-more-info-front-0008","button-coffee-more-info-back-0008"], tileFront:true},
+    {id: "0009", name: "Red Dalia", country: "Mexico", region: "Chiapas" , producer: "Finca Monte Azul", roastProfile: "Medium Dark", flavorNotes: ["Caramel", "Sweet", "Tropical Fruit", "Dried Fruit"], process: "Washed", variety: "Caturra, Typica", elevation:"1250 MASL", buttons: ["button-coffee-more-info-front-0009","button-coffee-more-info-back-0009"], tileFront:true},
+    {id: "0010", name: "Finca El Bosque", country: "Nicaragua", region: "Nueva Segovia" , producer: "Julio Peralta", roastProfile: "Light", flavorNotes: ["Banana", "Berry", "Chocolate", "Caramel"], process: "Natural Anerobic Fermentation", variety: "Yellow Catuai", elevation:"1350 MASL", buttons: ["button-coffee-more-info-front-0010","button-coffee-more-info-back-0010"], tileFront:true},
+    {id: "0011", name: "Finca Santa Maria de Lourdes", country: "Nicaragua", region: "Nueva Segovia" , producer: "Octavio Peralta", roastProfile: "Light", flavorNotes: ["Apple", "Floral", "Chocolate", "Tropical Fruit"], process: "Natural Anerobic Fermentation", variety: "Caturra, Typica, Bourbon", elevation:"1050 MASL", buttons: ["button-coffee-more-info-front-0011","button-coffee-more-info-back-0011"], tileFront:true},
+    {id: "0012", name: "Finca Borbollon", country: "Nicaragua", region: "Esteli" , producer: "Norman Canales", roastProfile: "Medium Light", flavorNotes: ["Floral", "Chocolate", "Citrus", "Sweet"], process: "Washed", variety: "Caturra, Typica, Bourbon", elevation:"1350 MASL", buttons: ["button-coffee-more-info-front-0012","button-coffee-more-info-back-0012"], tileFront:true},
+    {id: "0013", name: "Kerinci Highlands", country: "Sumatra", region: "Mount Kerinci Highlands" , producer: "Various Smallholders", roastProfile: "Dark", flavorNotes: ["Herbal", "Floral", "Citrus", "Tropical Fruit"], process: "Honey", variety: "Andung Sari, Tim-Tim, Bor-Bor", elevation:"1300 MASL", buttons: ["button-coffee-more-info-front-0013","button-coffee-more-info-back-0013"], tileFront:true},
+    {id: "0014", name: "Gayo Highlands", country: "Sumatra", region: "Central Aceh Regency" , producer: "Various Smallholders", roastProfile: "Medium Dark", flavorNotes: ["Herbal", "Tropical Fruit", "Orange", "Floral"], process: "Wet-Hulled", variety: "Ateng P88, Tim-Tim", elevation:"1450 MASL", buttons: ["button-coffee-more-info-front-0014","button-coffee-more-info-back-0014"], tileFront:true},
 ];
 let nextCoffeeId = "";
 let flavorNotes = [];
