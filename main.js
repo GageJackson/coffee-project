@@ -168,6 +168,8 @@ Function: Searches all coffee properties and returns a matching coffee tile if u
         -loops through every property in the coffee object and compares userSearchInput to every word in the coffee object
         -then uses filter function to determine matching strings in the arrays
         -the 2 arrays are combined into strings and compared to each other, if equal, will add coffee tile to filtered coffees
+            -(user search "bean farm" will match "greg's bean farm" won't match "greg's bean estate")
+            -(user search "bean" would match both though. all regardless of capitalization)
     -updates the coffee tiles html and their more info buttons
 
  */
@@ -175,13 +177,13 @@ function searchCoffeeTiles(){
     filteredCoffees = []
     let numberOfCoffeeProperties = 12;
     coffeeOfferings.forEach(coffee => {
-        let userSearchInput = searchedCoffeeWord.value.toLowerCase().split(" ");
+        let userSearchInputArray = searchedCoffeeWord.value.toLowerCase().split(" ");
         for(let i = 1; i < numberOfCoffeeProperties; i++){
-            let databaseSearchComparison = cycleThroughCoffeeProperties(coffee, i);
-            let userSearchMatches = databaseSearchComparison.filter(property =>{
-                return userSearchInput.indexOf(property) !== -1;
+            let databaseSearchComparisonArray = cycleThroughCoffeeProperties(coffee, i);
+            let userSearchMatchesArray = databaseSearchComparisonArray.filter(property =>{
+                return userSearchInputArray.indexOf(property) !== -1;
             })
-            if(userSearchMatches.join(" ") === userSearchInput.join(" ")){
+            if(userSearchMatchesArray.join(" ") === userSearchInputArray.join(" ")){
                 filteredCoffees.push(coffee);
             } else {
             }
@@ -190,6 +192,12 @@ function searchCoffeeTiles(){
     })
     updateInfoButtons();
 }
+/*
+cycleThroughCoffeeProperties
+Parameters: Takes in a coffee object and a number to go through each case
+Function: Runs through every property in the coffee object and returns an array of the coffees properties
+Returns: An array of strings to be compared
+ */
 function cycleThroughCoffeeProperties(coffee, number){
     switch(number){
         case 1:
@@ -225,9 +233,15 @@ function cycleThroughCoffeeProperties(coffee, number){
 }
 
 /*
-//////////////////////////////////////////////////////////////////////////////////////
-This section adds a new coffee object to the coffee offering array using search bar
-//////////////////////////////////////////////////////////////////////////////////////
+addNewCoffee
+Function: Creates new coffee object from form values and add it to coffeeOfferings array
+    -creates newCoffee object
+    -retrieves values from the add new coffee section
+    -breaks up flavor profile string and set it up as an array
+    -inputs all values into the newCoffee object
+    -adds new coffee to main coffeeOfferings array
+    -saves new coffeeOfferings array to local storage
+    -updates flavor notes, coffee origins and tiles
  */
 function addNewCoffee(){
     let newCoffee ={id:"", name:"", country:"", roastProfile:"", flavorNotes:[], variety:"", elevation: "", process:"", buttons: [], isTileFrontFacing: true};
@@ -268,14 +282,16 @@ function addNewCoffee(){
     coffeeOfferings.push(newCoffee);
     window.localStorage.setItem("coffeeOfferings", JSON.stringify(coffeeOfferings));
     updateFlavorNotes();
-    updateCountries();
+    updateCoffeeOrigins();
     updateTiles();
 }
-
 /*
-//////////////////////////////////////////////////////////////////////////////////////
-This section adds a new coffee object to the coffee offering array using sort selectors
-//////////////////////////////////////////////////////////////////////////////////////
+sortCoffeeTiles
+Function: sorts coffees into filteredCoffees array using selectors in browse side-bar
+    -clears filteredCoffee array and pulls values from all browse selectors
+    -runs through each coffee in the coffeeOfferings array and compares it to the selectors
+        -pushes in new coffees into filteredCoffee array
+    -updates coffee tileBoard and clears any input in the searchbar
  */
 function sortCoffeeTiles(){
     filteredCoffees = [];
@@ -289,22 +305,24 @@ function sortCoffeeTiles(){
             }
         }
     });
-    filteredCoffees = filteredCoffees.sort((a,b) => a.id < b.id ? 1 : -1);
+    sortFilteredCoffeesNumerically();
     document.getElementById("input-search").value = "";
     updateCoffeeTilesInnerHtml();
     updateInfoButtons();
 }
-
+/*
+sortFilteredCoffeesNumerically
+Function: numerically sorts filtered coffees by their id
+    -compare function sorts them in descending order
+ */
 function sortFilteredCoffeesNumerically(){
     filteredCoffees.sort(
         (a, b) => (parseInt(a.id) > parseInt(b.id)) ? 1 : (parseInt(a.id) < parseInt(b.id) ? -1 : 0)
     );
-    console.log(filteredCoffees);
 }
 /*
-//////////////////////////////////////////////////////////////////////////////////////
-This section clears the fields in the sidebar
-//////////////////////////////////////////////////////////////////////////////////////
+clearBrowseCoffeeFields
+Function: clears all fields in browse section then updates tiles
  */
 function clearBrowseCoffeeFields(){
     filteredCoffees = [];
@@ -314,6 +332,10 @@ function clearBrowseCoffeeFields(){
     document.getElementById("selector-flavor-note").selectedIndex = 0;
     updateTiles();
 }
+/*
+clearAddCoffeeFields
+Function: clears all fields in add coffee section
+ */
 function clearAddCoffeeFields(){
     document.getElementById("input-add-coffee").value = "";
     document.getElementById("input-add-coffee-producer").value = "";
@@ -327,31 +349,42 @@ function clearAddCoffeeFields(){
 }
 
 /*
-//////////////////////////////////////////////////////////////////////////////////////
-This section updates various part of the js
-//////////////////////////////////////////////////////////////////////////////////////
+retrievePreviouslyAddedCoffees
+Function: retrieves coffee offerings from previous sessions
+    -uncomment first line to erase local storage
  */
 function retrievePreviouslyAddedCoffees(){
-    window.localStorage.removeItem("coffeeOfferings");
+    //window.localStorage.removeItem("coffeeOfferings");
     const retrievedData = JSON.parse(window.localStorage.getItem("coffeeOfferings"));
     if(retrievedData){
         coffeeOfferings = retrievedData;
     }
-    console.log(retrievedData);
 }
+/*
+initializeTiles
+Function: first function that runs. sets up everything
+ */
 function initializeTiles(){
     retrievePreviouslyAddedCoffees();
     updateFlavorNotes();
-    updateCountries()
+    updateCoffeeOrigins()
     updateTiles();
     updateNextCoffeeId();
     updateInfoButtons();
 }
+/*
+updateTiles
+Function: called to update tileBoard
+ */
 function updateTiles(){
     clearAddCoffeeFields();
     updateSelectors();
     sortCoffeeTiles();
 }
+/*
+updateFlavorNotes
+Function: updates then sorts flavor selection. prevents duplicates
+ */
 function updateFlavorNotes(){
     coffeeOfferings.forEach(function(coffee){
         coffee.flavorNotes.forEach(function (flavor){
@@ -362,7 +395,11 @@ function updateFlavorNotes(){
     })
     flavorNotesInSelector.sort();
 }
-function updateCountries(){
+/*
+updateCoffeeOrigins
+Function: updates then sorts coffee origins. prevents duplicates
+ */
+function updateCoffeeOrigins(){
     coffeeOfferings.forEach(function(coffee){
         if(!coffeeOriginsInSelector.includes(coffee.country)){
             coffeeOriginsInSelector.push(coffee.country);
@@ -370,6 +407,11 @@ function updateCountries(){
     })
     coffeeOriginsInSelector.sort();
 }
+/*
+updateNextCoffeeId
+Function: updates the next id needed for a new coffee
+    -can currently handle 9999 coffees
+ */
 function updateNextCoffeeId(){
     let nextCoffeeId = "";
     nextCoffeeId += (parseInt(coffeeOfferings[coffeeOfferings.length-1].id) + 1);
@@ -384,7 +426,13 @@ function updateNextCoffeeId(){
             return nextCoffeeId = "" + nextCoffeeId;
     }
 }
-
+/*
+updateInfoButtons
+Function: updates the info buttons and their query and event listeners
+    -clears previous buttons
+    -runs through all filtered coffees, checks which side they are facing and pushes that side into the array
+    -runs through new array and adds event listeners to them
+*/
 function updateInfoButtons(){
     infoButtons = [];
     filteredCoffees.forEach(function (coffee){
