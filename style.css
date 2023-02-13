@@ -46,8 +46,8 @@
     --margin-nav-bar-section: 10rem;
     --margin-left-main-section: 3rem;
     --padding-input-elements: .5rem;
-    --border-radius-buttons: .35rem;
-    --border-radius-coffee-tiles: .5rem;
+    --border-radius-buttons: .5rem;
+    --border-radius-coffee-tiles: 1rem;
 }
 *,
 *::before,
